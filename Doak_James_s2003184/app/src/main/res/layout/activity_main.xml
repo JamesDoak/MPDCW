@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
+        tools:ignore="MissingConstraints">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+            <TextView android:id="@+id/salutation" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="20sp" android:text="James Doak - MPD Assignment 2021-2022"/>
+            <Button android:id="@+id/plannedRoadworksButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Planned Roadworks"/>
+            <Button android:id="@+id/roadworksButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Roadworks"/>
+            <Button android:id="@+id/currentIncidentsButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Current Incidents"/>
+            <TextView android:id="@+id/rawFeedDataDisplay" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="20sp" android:text="Raw Data here"/>
+
+
+
+<!--            <TextView android:id="@+id/salutation" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="20sp" android:text="James Doak - MPD Assignment 2021-2022"/>-->
+<!--            <Button android:id="@+id/feedAButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Planned Roadworks"/>-->
+<!--            <TextView android:id="@+id/acknowledgement1" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="20sp" android:text="Planned Roadworks Feed:"/>-->
+<!--            <TextView android:id="@+id/rawFeedADataDisplay" android:layout_width="fill_parent" android:layout_height="250px" android:textSize="20sp" android:text="Feed B"/>-->
+<!--            <Button android:id="@+id/feedBButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Roadworks"/>-->
+<!--                        <TextView android:id="@+id/acknowledgement2" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="20sp" android:text="Roadworks Feed:"/>-->
+<!--            <TextView android:id="@+id/rawFeedBDataDisplay" android:layout_width="fill_parent" android:layout_height="250px" android:textSize="20sp" android:text="Raw Data for Feed B is Displayed here"/>-->
+<!--            <Button android:id="@+id/feedCButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Current Incidents"/>-->
+<!--                        <TextView android:id="@+id/acknowledgement3" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="20sp" android:text="Current Incidents Feed:"/>-->
+<!--            <TextView android:id="@+id/rawFeedCDataDisplay" android:layout_width="fill_parent" android:layout_height="250px" android:textSize="20sp" android:text="Raw Data for Feed C is Displayed here"/>-->
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
