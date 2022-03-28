@@ -1,19 +1,19 @@
 package org.me.gcu.doak_james_s2003184;
 
-public class Incidents {
+public class Items {
 
     //variables
     private String title;
     private String description;
     private String link;
-    private int georss;
+    private String georss;
     private String author;
     private String comments;
-    private String pubdate;
+    private String pubDate;
 
     //getters and setters
     public String getTitle(){
-     return title;
+        return title;
     }
     public void setTitle(String titleIn){
         title = titleIn;
@@ -33,10 +33,10 @@ public class Incidents {
         link = linkIn;
     }
 
-    public int getGeorss(){
+    public String getGeorss(){
         return georss;
     }
-    public void setGeorss(int georssIn){
+    public void setGeorss(String georssIn){
         georss = georssIn;
     }
 
@@ -54,25 +54,25 @@ public class Incidents {
         comments = commentIn;
     }
 
-    public String getPubdate(){
-        return pubdate;
+    public String getPubDate(){
+        return pubDate;
     }
-    public void setPubdate(String pubdateIn){
-        pubdate = pubdateIn;
+    public void setPubDate(String pubDateIn){
+        pubDate = pubDateIn;
     }
 
     //constructor
-    public Incidents(){
+    public Items(){
         title = "";
         description = "";
         link = "";
-        georss = 0;
+        georss = "";
         author = "";
         comments = "";
-        pubdate = "";
+        pubDate = "";
     }
 
-    public Incidents(String titleIn, String descriptionIn, String linkIn, int georssIn, String authorIn,
+    public Items(String titleIn, String descriptionIn, String linkIn, String georssIn, String authorIn,
                      String commentsIn, String pubdateIn){
         title = titleIn;
         description = descriptionIn;
@@ -80,15 +80,16 @@ public class Incidents {
         georss = georssIn;
         author = authorIn;
         comments = commentsIn;
-        pubdate = pubdateIn;
+        pubDate = pubdateIn;
     }
 
     public String toString(){
         String output;
-        output = title + "</br>" + description + "</br>" + link + "</br>"
-                + "</br>" + georss + "</br>" + author + "</br>" + comments
-                + "</br>" + pubdate;
+        output = title + " " + description + " " + link + " " +
+                georss + " " + author + " " + comments
+                + " " + pubDate;
         return output;
     }
 
 }
+

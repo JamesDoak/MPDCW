@@ -83,4 +83,12 @@ public class Roadworks {
         pubdate = pubdateIn;
     }
 
+    public String toString(){
+        String output;
+        output = title + "</br>" + description + "</br>" + link + "</br>"
+                + "</br>" + georss + "</br>" + author + "</br>" + comments
+                + "</br>" + pubdate;
+        return output;
+    }
+
 }

@@ -8,12 +8,19 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ListView;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener
 {
@@ -27,6 +34,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private String urlSourceA="https://trafficscotland.org/rss/feeds/plannedroadworks.aspx";
     private String urlSourceB="https://trafficscotland.org/rss/feeds/roadworks.aspx";
     private String urlSourceC="https://trafficscotland.org/rss/feeds/currentincidents.aspx";
+    private LinkedList<Items> itemsLinkedList;
+    private String[] items;
+
+
+    //new
+    private LinkedList<Items> roadworks = new LinkedList<>();
+    private LinkedList<Items> currentIncidents = new LinkedList<>();
+    private LinkedList<Items> plannedWorks = new LinkedList<>();
+
+    public MainActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -44,57 +62,72 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         currentIncidentsButton.setOnClickListener(this);
         Log.e("MyTag","after feedAButton");
         // More Code goes here
-    }
 
-    public void startProgress()
-    {
-        // Run network access on a separate thread;
-        new Thread(new Task(urlSourceA)).start();
-    } //
 
-    public void startProgress2(){
-        new Thread(new Task(urlSourceB)).start();
 
     }
 
-    public void startProgress3(){
-        new Thread(new Task(urlSourceC)).start();
+    public void startProgressMain(int chosenButton){
+        //feedChoice is new - code further below
+        switch(chosenButton){
+            case 1:
+                new Thread(new Task(urlSourceA, 1)).start();
+                break;
+            case 2:
+                new Thread(new Task(urlSourceB, 2)).start();
+                break;
+            case 3:
+                new Thread(new Task(urlSourceC, 3)).start();
+                break;
+        }
     }
+
 
     @Override
     public void onClick(View v)
     {
+
         if (v == plannedRoadworksButton) {
             Log.e("MyTag","in onClick");
-            startProgress();
+            rawFeedDataDisplay.setText("Loading all Planned Roadworks...");
+            startProgressMain(1);
             Log.e("MyTag","after startProgress");
         }
         if (v == roadworksButton) {
             Log.e("MyTag","in onClick");
-            startProgress2();
+            rawFeedDataDisplay.setText("Loading all Current Roadworks...");
+            startProgressMain(2);
             Log.e("MyTag","after startProgress");
         }
         if (v == currentIncidentsButton) {
             Log.e("MyTag","in onClick");
-            startProgress3();
+            rawFeedDataDisplay.setText("Loading all Current Incidents...");
+            startProgressMain(3);
             Log.e("MyTag","after startProgress");
         }
 
     }
+
 
     // Need separate thread to access the internet resource over network
     // Other neater solutions should be adopted in later iterations.
     private class Task implements Runnable
     {
+        //new
         private String url;
+        private int chosenFeed;
 
-        public Task(String aurl)
+        public Task(String aurl, int feedChoice)
         {
             url = aurl;
+            //new - int above is new too
+            chosenFeed = feedChoice;
         }
         @Override
         public void run()
         {
+            //new
+            int choice = chosenFeed;
 
             URL aurl;
             URLConnection yc;
@@ -123,7 +156,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
                 }
                 in.close();
+
             }
+
             catch (IOException ae)
             {
                 Log.e("MyTag", "ioexception in run");
@@ -132,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             //
             // Now that you have the xml data you can parse it
             //
-
             // Now update the TextView to display raw XML data
             // Probably not the best way to update TextView
             // but we are just getting started !
@@ -141,7 +175,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             {
                 public void run() {
                     Log.d("UI thread", "I am the UI thread");
-                    rawFeedDataDisplay.setText(result);
+
+//                    rawFeedDataDisplay.setText(result);
+
+                    Parser p = new Parser();
+                    p.parseData(result);
+//                    rawFeedDataDisplay.setText(result);
+
+
                 }
             });
         }
