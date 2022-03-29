@@ -6,21 +6,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ListView;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener
 {
@@ -31,17 +26,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private String result = "";
     private String url1="";
     // Traffic Scotland Planned Roadworks XML link
-    private String urlSourceA="https://trafficscotland.org/rss/feeds/plannedroadworks.aspx";
-    private String urlSourceB="https://trafficscotland.org/rss/feeds/roadworks.aspx";
-    private String urlSourceC="https://trafficscotland.org/rss/feeds/currentincidents.aspx";
-    private LinkedList<Items> itemsLinkedList;
+    private final String urlSourceA="https://trafficscotland.org/rss/feeds/plannedroadworks.aspx";
+    private final String urlSourceB="https://trafficscotland.org/rss/feeds/roadworks.aspx";
+    private final String urlSourceC="https://trafficscotland.org/rss/feeds/currentincidents.aspx";
+    private ArrayList<Items> itemsArrayList = new ArrayList<>();
     private String[] items;
-
+    private ArrayAdapter<Items> itemsArrayAdapter;
+    private ListView itemListView;
+    private TextView label2;
 
     //new
-    private LinkedList<Items> roadworks = new LinkedList<>();
-    private LinkedList<Items> currentIncidents = new LinkedList<>();
-    private LinkedList<Items> plannedWorks = new LinkedList<>();
+//    private ArrayList<Items> roadworks = new ArrayList<>();
+//    private ArrayList<Items> currentIncidents = new ArrayList<>();
+//    private ArrayList<Items> plannedWorks = new ArrayList<>();
 
     public MainActivity() {
     }
@@ -62,6 +59,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         currentIncidentsButton.setOnClickListener(this);
         Log.e("MyTag","after feedAButton");
         // More Code goes here
+//        label2 = (TextView) findViewById(R.id.label2);
+        itemListView = (ListView) findViewById(R.id.ListView);
+
+
+
 
 
 
@@ -133,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             URLConnection yc;
             BufferedReader in = null;
             String inputLine = "";
+            result = "";
 
 
             Log.e("MyTag","in run");
@@ -180,7 +183,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
                     Parser p = new Parser();
                     p.parseData(result);
-//                    rawFeedDataDisplay.setText(result);
+                    itemsArrayList = p.parseData(result);
+                    ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
+                    itemListView.setAdapter(adapter);
 
 
                 }

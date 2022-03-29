@@ -85,9 +85,11 @@ public class Items {
 
     public String toString(){
         String output;
-        output = title + " " + description + " " + link + " " +
-                georss + " " + author + " " + comments
-                + " " + pubDate;
+        output = "• Road: "+title + "\n• Description: " + description + "\n• Link: " + link
+//                + "\ngeoRSS " + georss
+//                + " " + author
+//                + " " + comments
+                + "\n• Published: " + pubDate;
         return output;
     }
 

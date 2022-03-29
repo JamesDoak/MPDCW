@@ -8,15 +8,17 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.lang.reflect.Array;
 import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class Parser {
 
-     LinkedList<Items> parseData(String dataToParse)
+    ArrayList<Items> parseData(String dataToParse)
     {
         Items item = null;
         int itemFound = 0;
-        LinkedList <Items> itemsLinkedList = null;
+        ArrayList <Items> itemsArrayList = null;
         try
         {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -32,7 +34,7 @@ public class Parser {
                     // Check which Tag we have
                     if (xpp.getName().equalsIgnoreCase("channel"))
                     {
-                        itemsLinkedList  = new LinkedList<>();
+                        itemsArrayList  = new ArrayList<>();
                     }
                     else
                     if (xpp.getName().equalsIgnoreCase("item"))
@@ -113,13 +115,13 @@ public class Parser {
                     if (xpp.getName().equalsIgnoreCase("item"))
                     {
                         Log.e("MyTag","item is " + item.toString());
-                        itemsLinkedList.add(item);
+                        itemsArrayList.add(item);
                     }
                     else
                     if (xpp.getName().equalsIgnoreCase("channel"))
                     {
                         int size;
-                        size = itemsLinkedList.size();
+                        size = itemsArrayList.size();
                         Log.e("MyTag","itemsCollection size is " + size);
                     }
                 }
@@ -143,7 +145,7 @@ public class Parser {
 
         Log.e("MyTag","End document");
 
-        return itemsLinkedList;
+        return itemsArrayList;
 
     }
 
