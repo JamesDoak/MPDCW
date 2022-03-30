@@ -62,7 +62,7 @@ public class Items {
     }
 
     //constructor
-    public Items(){
+    public Items() {
         title = "";
         description = "";
         link = "";
@@ -84,12 +84,39 @@ public class Items {
     }
 
     public String toString(){
+
         String output;
-        output = "• Road: "+title + "\n• Description: " + description + "\n• Link: " + link
+        output = "• Road: "+title
+//                + "\n• Description: "
+//                + removeTags(description)
+//                + "\n• Link: " + link
 //                + "\ngeoRSS " + georss
 //                + " " + author
 //                + " " + comments
                 + "\n• Published: " + pubDate;
+        return output;
+    }
+
+    public String DetailedString(Object o){
+        String output;
+        output = "• Road: "+title
+                + "\n• Description: "
+                + removeTags(description)
+                + "\n• Link: " + link
+                + "\n• geoRSS: " + georss
+                + " " + author
+                + " " + comments
+                + "\n• Published: " + pubDate;
+        return output;
+    }
+
+    public String removeTags(String description) {
+        String[] arrOfStr = description.split("<br />", 10);
+        String output="";
+
+        for (int i=0;i<arrOfStr.length;i++){
+            output = output+ " " +arrOfStr[i]+ " ";
+        }
         return output;
     }
 

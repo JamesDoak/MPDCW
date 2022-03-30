@@ -7,11 +7,14 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private final String urlSourceB="https://trafficscotland.org/rss/feeds/roadworks.aspx";
     private final String urlSourceC="https://trafficscotland.org/rss/feeds/currentincidents.aspx";
     private ArrayList<Items> itemsArrayList = new ArrayList<>();
+    private ArrayList itemList = new ArrayList<>();
     private String[] items;
     private ArrayAdapter<Items> itemsArrayAdapter;
     private ListView itemListView;
@@ -69,7 +73,38 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
 
 
+        ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
+        ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
+
+        itemListView.setAdapter(adapter);
+        itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                rawFeedDataDisplay.setText("Clicked item number: " + position);
+                Object item;
+                item = itemListView.getItemAtPosition(position);
+
+                Items itemN = new Items();
+                String output = itemN.DetailedString(item);
+
+                if (!itemList.isEmpty()) {
+                    itemList.clear();
+                    ArrayAdapter adapter1 = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
+
+                    Log.d("Object", item.toString());
+                    itemListView.setAdapter(adapter1);
+                }else{
+                itemList.add(output);
+                ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
+
+                Log.d("Object", item.toString());
+                itemListView.setAdapter(adapter2);}
             }
+        });
+
+    }
 
 //    public void progressBar(){
 //        //progress bar
@@ -142,6 +177,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             Log.e("MyTag","in onClick");
             rawFeedDataDisplay.setText("Showing all Planned Roadworks");
             startProgressMain(1);
+            itemList.clear();
             Log.e("MyTag","after startProgress");
         }
         if (v == roadworksButton) {
@@ -149,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             Log.e("MyTag","in onClick");
             rawFeedDataDisplay.setText("Showing all Current Roadworks");
             startProgressMain(2);
+            itemList.clear();
             Log.e("MyTag","after startProgress");
         }
         if (v == currentIncidentsButton) {
@@ -156,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             Log.e("MyTag","in onClick");
             rawFeedDataDisplay.setText("Showing all Current Incidents");
             startProgressMain(3);
+            itemList.clear();
             Log.e("MyTag","after startProgress");
         }
 
@@ -239,6 +277,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
                     //run the data through the parser
                     p.parseData(result);
+
                     //update the items array with the parsed data
                     itemsArrayList = p.parseData(result);
                     //set and display the list view

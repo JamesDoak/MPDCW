@@ -6,36 +6,81 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ScrollView android:layout_width="fill_parent" android:layout_height="match_parent"
-        tools:ignore="MissingConstraints">
-        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
-            <TextView android:id="@+id/salutation" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="20sp" android:text="James Doak - MPD Assignment 2021-2022"/>
-            <Button android:id="@+id/plannedRoadworksButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Planned Roadworks"/>
-            <Button android:id="@+id/roadworksButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Roadworks"/>
-            <Button android:id="@+id/currentIncidentsButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Current Incidents"/>
-            <TextView android:id="@+id/rawFeedDataDisplay" android:layout_width="fill_parent" android:background="@color/black" android:gravity="center" android:textColor="@color/white" android:layout_height="wrap_content" android:textSize="20sp" android:text=""/>
-<!--            <ProgressBar-->
-<!--                android:id="@+id/bar1"-->
-<!--                style="@android:style/Widget.ProgressBar.Horizontal"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"/>-->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/plannedRoadworksButton"
+                android:layout_width="fill_parent"
+                android:layout_height="37dp"
+                android:background="@drawable/drawable"
+                android:text="Press for Planned Roadworks" />
+
+            <Button
+                android:id="@+id/roadworksButton"
+                android:layout_width="fill_parent"
+                android:layout_height="38dp"
+                android:background="@drawable/drawable"
+                android:text="Press for Current Roadworks" />
+
+            <Button
+                android:id="@+id/currentIncidentsButton"
+                android:layout_width="fill_parent"
+                android:layout_height="36dp"
+                android:background="@drawable/drawable"
+                android:text="Press for Current Incidents" />
+
+            <TextView
+                android:id="@+id/rawFeedDataDisplay"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <!--            <ProgressBar-->
+            <!--                android:id="@+id/bar1"-->
+            <!--                style="@android:style/Widget.ProgressBar.Horizontal"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_gravity="center"/>-->
 
 
             <ListView
                 android:id="@+id/ListView"
                 android:layout_width="match_parent"
-                android:layout_height="392dp"
+                android:layout_height="426dp"
                 android:cacheColorHint="@color/black"
                 android:divider="@color/black"
                 android:dividerHeight="3px"
                 android:listSelector="#0f0"></ListView>
 
+            <TextView
+                android:id="@+id/salutation"
+                android:layout_width="fill_parent"
+                android:layout_height="39dp"
+                android:background="@color/black"
+                android:gravity="center"
+                android:text="Designed by James Doak"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
 
         </LinearLayout>
     </ScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
