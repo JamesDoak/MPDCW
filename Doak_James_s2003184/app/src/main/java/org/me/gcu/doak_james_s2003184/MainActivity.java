@@ -3,11 +3,13 @@ package org.me.gcu.doak_james_s2003184;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ListView;
 import java.io.BufferedReader;
@@ -34,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private ArrayAdapter<Items> itemsArrayAdapter;
     private ListView itemListView;
     private TextView label2;
+    private Handler handler;
+    private ProgressBar pBar;
+
 
     //new
 //    private ArrayList<Items> roadworks = new ArrayList<>();
@@ -64,24 +69,67 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
 
 
+            }
 
-
-
-    }
+//    public void progressBar(){
+//        //progress bar
+//        result = "";
+//        handler = new Handler();
+//        pBar = findViewById(R.id.bar1);
+//        pBar.setMax(itemsArrayList.size());
+//
+//        new Thread(new Runnable(){
+//            @Override
+//            public void run(){
+//
+//                int counter = itemsArrayList.size();
+//                for (int i = 0; i <= counter; i++)
+//                {
+//                    final int currentProgressCount = i;
+//                    try
+//                    {
+//                        Thread.sleep(50);
+//                    }
+//                    catch (InterruptedException e)
+//                    {
+//                        e.printStackTrace();
+//                    }
+//                    handler.post(new Runnable()
+//                    {
+//                        @Override
+//                        public void run()
+//                        {
+//                            pBar.setProgress(currentProgressCount);
+//                        }
+//                    });
+//                }
+//
+//            }
+//
+//        }).start();
+//    }
 
     public void startProgressMain(int chosenButton){
         //feedChoice is new - code further below
         switch(chosenButton){
             case 1:
                 new Thread(new Task(urlSourceA, 1)).start();
+//                progressBar();
                 break;
             case 2:
                 new Thread(new Task(urlSourceB, 2)).start();
+//                progressBar();
                 break;
             case 3:
                 new Thread(new Task(urlSourceC, 3)).start();
+//                progressBar();
                 break;
         }
+    }
+
+    //remove the listview when loading new items
+    public void removeList(){
+        this.itemListView.setAdapter(null);
     }
 
 
@@ -90,20 +138,23 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     {
 
         if (v == plannedRoadworksButton) {
+            removeList();
             Log.e("MyTag","in onClick");
-            rawFeedDataDisplay.setText("Loading all Planned Roadworks...");
+            rawFeedDataDisplay.setText("Showing all Planned Roadworks");
             startProgressMain(1);
             Log.e("MyTag","after startProgress");
         }
         if (v == roadworksButton) {
+            removeList();
             Log.e("MyTag","in onClick");
-            rawFeedDataDisplay.setText("Loading all Current Roadworks...");
+            rawFeedDataDisplay.setText("Showing all Current Roadworks");
             startProgressMain(2);
             Log.e("MyTag","after startProgress");
         }
         if (v == currentIncidentsButton) {
+            removeList();
             Log.e("MyTag","in onClick");
-            rawFeedDataDisplay.setText("Loading all Current Incidents...");
+            rawFeedDataDisplay.setText("Showing all Current Incidents");
             startProgressMain(3);
             Log.e("MyTag","after startProgress");
         }
@@ -179,11 +230,18 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 public void run() {
                     Log.d("UI thread", "I am the UI thread");
 
+                    //display raw data - redundant.
 //                    rawFeedDataDisplay.setText(result);
 
+                    //set the parser for future use
                     Parser p = new Parser();
+
+
+                    //run the data through the parser
                     p.parseData(result);
+                    //update the items array with the parsed data
                     itemsArrayList = p.parseData(result);
+                    //set and display the list view
                     ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
                     itemListView.setAdapter(adapter);
 

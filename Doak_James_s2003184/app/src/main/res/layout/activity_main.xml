@@ -14,7 +14,14 @@
             <Button android:id="@+id/plannedRoadworksButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Planned Roadworks"/>
             <Button android:id="@+id/roadworksButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Roadworks"/>
             <Button android:id="@+id/currentIncidentsButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Current Incidents"/>
-            <TextView android:id="@+id/rawFeedDataDisplay" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="20sp" android:text=""/>
+            <TextView android:id="@+id/rawFeedDataDisplay" android:layout_width="fill_parent" android:background="@color/black" android:gravity="center" android:textColor="@color/white" android:layout_height="wrap_content" android:textSize="20sp" android:text=""/>
+<!--            <ProgressBar-->
+<!--                android:id="@+id/bar1"-->
+<!--                style="@android:style/Widget.ProgressBar.Horizontal"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"/>-->
+
 
             <ListView
                 android:id="@+id/ListView"
