@@ -86,8 +86,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 Object item;
                 item = itemListView.getItemAtPosition(position);
 
-                Items itemN = new Items();
-                String output = itemN.DetailedString(item);
+                //get current position
+                Integer pos = position;
+                Log.e("Position: ", pos.toString());
+                Log.e("ArrayList", itemsArrayList.toString());
+
+
+
+//                Items itemN = new Items();
+//                String output = itemN.DetailedString(item);
 
                 if (!itemList.isEmpty()) {
                     itemList.clear();
@@ -96,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                     Log.d("Object", item.toString());
                     itemListView.setAdapter(adapter1);
                 }else{
-                itemList.add(output);
+                itemList.add(item);
                 ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
 
                 Log.d("Object", item.toString());
@@ -251,17 +258,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
             }
 
-            catch (IOException ae)
-            {
+            catch (IOException ae) {
                 Log.e("MyTag", "ioexception in run");
             }
 
-            //
-            // Now that you have the xml data you can parse it
-            //
-            // Now update the TextView to display raw XML data
-            // Probably not the best way to update TextView
-            // but we are just getting started !
+            //create a copy of the XML stream data, stored locally
+            //pass this copy to the run, for parser.
+            ArrayList xmlCopy = new ArrayList<>();
+            xmlCopy.add(result);
+            Log.d("Array (XML COPY): ", xmlCopy.toString());
+
 
             MainActivity.this.runOnUiThread(new Runnable()
             {
@@ -276,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
 
                     //run the data through the parser
-                    p.parseData(result);
+                    p.parseData(xmlCopy.toString());
 
                     //update the items array with the parsed data
                     itemsArrayList = p.parseData(result);

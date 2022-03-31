@@ -11,6 +11,7 @@ public class Items {
     private String comments;
     private String pubDate;
 
+
     //getters and setters
     public String getTitle(){
         return title;
@@ -61,6 +62,17 @@ public class Items {
         pubDate = pubDateIn;
     }
 
+    public String getItem(String item){
+        String output;
+        output = "• Road: "+title
+                + "\n• Description: "
+                + removeTags(description)
+                + "\n• Link: " + link
+                + "\n• geoRSS: " + georss
+                + "\n• Published: " + pubDate;
+        return output;
+    }
+
     //constructor
     public Items() {
         title = "";
@@ -83,21 +95,13 @@ public class Items {
         pubDate = pubdateIn;
     }
 
-    public String toString(){
-
-        String output;
-        output = "• Road: "+title
-//                + "\n• Description: "
-//                + removeTags(description)
-//                + "\n• Link: " + link
-//                + "\ngeoRSS " + georss
-//                + " " + author
-//                + " " + comments
-                + "\n• Published: " + pubDate;
-        return output;
+    public Items(String titleIn, String pubdateIn){
+        title = titleIn;
+        pubDate = pubdateIn;
     }
 
-    public String DetailedString(Object o){
+    public String toString(){
+
         String output;
         output = "• Road: "+title
                 + "\n• Description: "
@@ -109,6 +113,19 @@ public class Items {
                 + "\n• Published: " + pubDate;
         return output;
     }
+
+    public String DetailedString(Object o){
+        String output;
+        output = "• Road: "+title
+                + "\n• Description: "
+                + removeTags(description)
+                + "\n• Link: " + link
+                + "\n• geoRSS: " + georss
+                + "\n• Published: " + pubDate;
+        return output;
+    }
+
+
 
     public String removeTags(String description) {
         String[] arrOfStr = description.split("<br />", 10);
