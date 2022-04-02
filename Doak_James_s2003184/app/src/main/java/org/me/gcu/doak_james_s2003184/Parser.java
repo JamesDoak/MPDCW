@@ -71,7 +71,7 @@ public class Parser {
                                 item.setLink(link);
                             }
                             else
-                            if (xpp.getName().equalsIgnoreCase("georss:point"))
+                            if (xpp.getName().equalsIgnoreCase("point"))
                             {
                                 // Now just get the associated text
                                 String georss = xpp.nextText();

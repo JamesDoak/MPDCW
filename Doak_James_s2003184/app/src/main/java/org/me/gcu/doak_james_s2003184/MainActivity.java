@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private TextView label2;
     private Handler handler;
     private ProgressBar pBar;
+    private TextView label;
 
 
     //new
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         // More Code goes here
 //        label2 = (TextView) findViewById(R.id.label2);
         itemListView = (ListView) findViewById(R.id.ListView);
+        label = (TextView)findViewById(R.id.label);
 
 
 
@@ -91,11 +93,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 Log.e("Position: ", pos.toString());
                 Log.e("ArrayList", itemsArrayList.toString());
 
-
-
-//                Items itemN = new Items();
-//                String output = itemN.DetailedString(item);
-
                 if (!itemList.isEmpty()) {
                     itemList.clear();
                     ArrayAdapter adapter1 = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
@@ -107,7 +104,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
 
                 Log.d("Object", item.toString());
-                itemListView.setAdapter(adapter2);}
+                itemListView.setAdapter(adapter2);
+
+
+
+
+                }
             }
         });
 
@@ -182,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         if (v == plannedRoadworksButton) {
             removeList();
             Log.e("MyTag","in onClick");
-            rawFeedDataDisplay.setText("Showing all Planned Roadworks");
+            rawFeedDataDisplay.setText("Loading all Planned Roadworks");
             startProgressMain(1);
             itemList.clear();
             Log.e("MyTag","after startProgress");
@@ -190,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         if (v == roadworksButton) {
             removeList();
             Log.e("MyTag","in onClick");
-            rawFeedDataDisplay.setText("Showing all Current Roadworks");
+            rawFeedDataDisplay.setText("Loading all Current Roadworks");
             startProgressMain(2);
             itemList.clear();
             Log.e("MyTag","after startProgress");
@@ -198,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         if (v == currentIncidentsButton) {
             removeList();
             Log.e("MyTag","in onClick");
-            rawFeedDataDisplay.setText("Showing all Current Incidents");
+            rawFeedDataDisplay.setText("Loading all Current Incidents");
             startProgressMain(3);
             itemList.clear();
             Log.e("MyTag","after startProgress");
@@ -289,6 +291,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                     //set and display the list view
                     ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
                     itemListView.setAdapter(adapter);
+                    rawFeedDataDisplay.setText("Displaying results");
 
 
                 }
