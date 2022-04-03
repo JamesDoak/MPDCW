@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--James Alexander Doak-->
+<!--S2003184-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -41,6 +43,30 @@
                 android:background="@drawable/drawable"
                 android:text="Press for Current Incidents" />
 
+
+
+
+            <Button
+                android:id="@+id/searchButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Search by road" />
+            <EditText
+                android:id="@+id/editText1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textView2"
+                android:layout_toRightOf="@+id/textView2"
+                android:background="#CCCCCC"
+                android:ems="10"
+                android:gravity="center"
+                android:text=""
+                android:inputType="textPersonName">
+                android:clickable="true"
+                android:focusableInTouchMode="true"
+                <requestFocus />
+            </EditText>
+
             <TextView
                 android:id="@+id/rawFeedDataDisplay"
                 android:layout_width="fill_parent"
@@ -62,21 +88,11 @@
             <ListView
                 android:id="@+id/ListView"
                 android:layout_width="match_parent"
-                android:layout_height="426dp"
+                android:layout_height="375dp"
                 android:cacheColorHint="@color/black"
                 android:divider="@color/black"
                 android:dividerHeight="3px"
                 android:listSelector="#0f0"></ListView>
-
-            <TextView
-                android:id="@+id/salutation"
-                android:layout_width="fill_parent"
-                android:layout_height="39dp"
-                android:background="@color/black"
-                android:gravity="center"
-                android:text="Designed by James Doak"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
 
 
         </LinearLayout>

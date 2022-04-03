@@ -1,7 +1,12 @@
+//James Alexander Doak
+//S2003184
+
 package org.me.gcu.doak_james_s2003184;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -10,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ListView;
@@ -20,42 +26,41 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener
 {
     private TextView rawFeedDataDisplay;
+    private EditText roadSearch;
     private Button plannedRoadworksButton;
     private Button roadworksButton;
     private Button currentIncidentsButton;
+    private Button searchButton;
     private String result = "";
     private String url1="";
-    // Traffic Scotland Planned Roadworks XML link
     private final String urlSourceA="https://trafficscotland.org/rss/feeds/plannedroadworks.aspx";
     private final String urlSourceB="https://trafficscotland.org/rss/feeds/roadworks.aspx";
     private final String urlSourceC="https://trafficscotland.org/rss/feeds/currentincidents.aspx";
     private ArrayList<Items> itemsArrayList = new ArrayList<>();
     private ArrayList itemList = new ArrayList<>();
-    private String[] items;
-    private ArrayAdapter<Items> itemsArrayAdapter;
     private ListView itemListView;
-    private TextView label2;
-    private Handler handler;
-    private ProgressBar pBar;
     private TextView label;
 
 
-    //new
-//    private ArrayList<Items> roadworks = new ArrayList<>();
-//    private ArrayList<Items> currentIncidents = new ArrayList<>();
-//    private ArrayList<Items> plannedWorks = new ArrayList<>();
 
     public MainActivity() {
+
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.e("MyTag","in onCreate");
@@ -67,12 +72,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         roadworksButton.setOnClickListener(this);
         currentIncidentsButton = (Button)findViewById(R.id.currentIncidentsButton);
         currentIncidentsButton.setOnClickListener(this);
+        searchButton = (Button)findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(this);
+        roadSearch = (EditText)findViewById(R.id.editText1);
         Log.e("MyTag","after feedAButton");
         // More Code goes here
-//        label2 = (TextView) findViewById(R.id.label2);
+        label = (TextView) findViewById(R.id.label);
         itemListView = (ListView) findViewById(R.id.ListView);
-        label = (TextView)findViewById(R.id.label);
-
 
 
         ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
@@ -91,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 //get current position
                 Integer pos = position;
                 Log.e("Position: ", pos.toString());
-                Log.e("ArrayList", itemsArrayList.toString());
+//                Log.e("ArrayList", itemsArrayList.toString());
 
                 if (!itemList.isEmpty()) {
                     itemList.clear();
@@ -105,53 +111,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
                 Log.d("Object", item.toString());
                 itemListView.setAdapter(adapter2);
-
-
-
-
                 }
             }
         });
 
     }
-
-//    public void progressBar(){
-//        //progress bar
-//        result = "";
-//        handler = new Handler();
-//        pBar = findViewById(R.id.bar1);
-//        pBar.setMax(itemsArrayList.size());
-//
-//        new Thread(new Runnable(){
-//            @Override
-//            public void run(){
-//
-//                int counter = itemsArrayList.size();
-//                for (int i = 0; i <= counter; i++)
-//                {
-//                    final int currentProgressCount = i;
-//                    try
-//                    {
-//                        Thread.sleep(50);
-//                    }
-//                    catch (InterruptedException e)
-//                    {
-//                        e.printStackTrace();
-//                    }
-//                    handler.post(new Runnable()
-//                    {
-//                        @Override
-//                        public void run()
-//                        {
-//                            pBar.setProgress(currentProgressCount);
-//                        }
-//                    });
-//                }
-//
-//            }
-//
-//        }).start();
-//    }
 
     public void startProgressMain(int chosenButton){
         //feedChoice is new - code further below
@@ -177,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View v)
     {
@@ -206,6 +171,28 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             Log.e("MyTag","after startProgress");
         }
 
+        if (v == searchButton){
+
+            String userSEntry = roadSearch.getText().toString();
+            Log.d("User Input: ", userSEntry); //works - returns user entry
+
+            if(userSEntry.isEmpty()){
+                rawFeedDataDisplay.setText("Please enter a search term");
+            }
+            else {
+
+                ArrayList<Items> matched = new ArrayList<Items>();
+                for (Items item : itemsArrayList) {
+                    if (item.getTitle().toLowerCase(Locale.ROOT).contains(userSEntry)) {
+                        matched.add(item);
+                    }
+                }
+                Log.e("Matched: ", matched.toString());
+                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, matched);
+                itemListView.setAdapter(adapter);
+            }
+        }
+
     }
 
 
@@ -226,16 +213,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         @Override
         public void run()
         {
-            //new
-            int choice = chosenFeed;
-
             URL aurl;
             URLConnection yc;
             BufferedReader in = null;
             String inputLine = "";
             result = "";
-
-
             Log.e("MyTag","in run");
 
             try
@@ -245,11 +227,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 yc = aurl.openConnection();
                 in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
                 Log.e("MyTag","after ready");
-                //
-                // Now read the data. Make sure that there are no specific hedrs
-                // in the data file that you need to ignore.
-                // The useful data that you need is in each of the item entries
-                //
                 while ((inputLine = in.readLine()) != null)
                 {
                     result = result + inputLine;
@@ -257,18 +234,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
                 }
                 in.close();
-
             }
 
             catch (IOException ae) {
                 Log.e("MyTag", "ioexception in run");
             }
 
-            //create a copy of the XML stream data, stored locally
-            //pass this copy to the run, for parser.
-            ArrayList xmlCopy = new ArrayList<>();
-            xmlCopy.add(result);
-            Log.d("Array (XML COPY): ", xmlCopy.toString());
+
 
 
             MainActivity.this.runOnUiThread(new Runnable()
@@ -276,18 +248,20 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 public void run() {
                     Log.d("UI thread", "I am the UI thread");
 
-                    //display raw data - redundant.
-//                    rawFeedDataDisplay.setText(result);
-
                     //set the parser for future use
                     Parser p = new Parser();
+//
+//                    //run the data through the parser
+//                    p.parseData(xmlCopy.toString());
 
-
-                    //run the data through the parser
-                    p.parseData(xmlCopy.toString());
+                    //create a copy of the XML stream data, stored locally
+                    //pass this copy to parser.
+                    String xmlCopy = result;
+                    Log.d("(XML COPY): ", xmlCopy);
 
                     //update the items array with the parsed data
-                    itemsArrayList = p.parseData(result);
+                    itemsArrayList = p.parseData(xmlCopy);
+
                     //set and display the list view
                     ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
                     itemListView.setAdapter(adapter);
@@ -299,6 +273,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         }
 
     }
+
+
 
 
 }

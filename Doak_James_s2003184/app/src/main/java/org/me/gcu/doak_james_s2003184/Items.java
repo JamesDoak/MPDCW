@@ -1,4 +1,9 @@
+//James Alexander Doak
+//S2003184
+
 package org.me.gcu.doak_james_s2003184;
+
+import java.util.ArrayList;
 
 public class Items {
 
@@ -10,7 +15,14 @@ public class Items {
     private String author;
     private String comments;
     private String pubDate;
+    private ArrayList<Items> item = new ArrayList<Items>();
 
+//    public void setArray(ArrayList<Items> arr){
+//        item = arr;
+//    }
+//    public ArrayList<Items> getArr(){
+//        return item;
+//    }
 
     //getters and setters
     public String getTitle(){
@@ -66,7 +78,7 @@ public class Items {
         String output;
         output = "• Road: "+title
                 + "\n• Description: "
-                + removeTags(description)
+                + removeBRTags(description)
                 + "\n• Link: " + link
                 + "\n• geoRSS: " + georss
                 + "\n• Published: " + pubDate;
@@ -84,6 +96,8 @@ public class Items {
         pubDate = "";
     }
 
+
+
     public Items(String titleIn, String descriptionIn, String linkIn, String georssIn, String authorIn,
                      String commentsIn, String pubdateIn){
         title = titleIn;
@@ -100,42 +114,30 @@ public class Items {
         pubDate = pubdateIn;
     }
 
-    public String toString(){
-
-        String output;
-        output = "• Road: "+title
+    public String toString()
+    {
+        String result;
+        result = "• Road: "+title
                 + "\n• Description: "
-                + removeTags(description)
-                + "\n• Link: " + link
-                + "\n• geoRSS: " + georss
-                + " " + author
-                + " " + comments
+                + removeBRTags(description)
+//                + "\n• Link: " + link
+//                + "\n• geoRSS: " + georss
+//                + " " + author
+//                + " " + comments
                 + "\n• Published: " + pubDate;
-        return output;
+        return result;
     }
 
-    public String DetailedString(Object o){
-        String output;
-        output = "• Road: "+title
-                + "\n• Description: "
-                + removeTags(description)
-                + "\n• Link: " + link
-                + "\n• geoRSS: " + georss
-                + "\n• Published: " + pubDate;
-        return output;
-    }
-
-
-
-    public String removeTags(String description) {
-        String[] arrOfStr = description.split("<br />", 10);
-        String output="";
-
-        for (int i=0;i<arrOfStr.length;i++){
-            output = output+ " " +arrOfStr[i]+ " ";
+    public String removeBRTags(String des)
+    {
+        String[] stringArray = des.split("<br />");
+        String result = "";
+        for (int i = 0; i < stringArray.length; i++){
+            result = result + " " + stringArray[i] + " ";
         }
-        return output;
+        return result;
     }
+
 
 }
 

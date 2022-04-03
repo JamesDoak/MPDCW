@@ -1,3 +1,6 @@
+//James Alexander Doak
+//S2003184
+
 package org.me.gcu.doak_james_s2003184;
 
 import android.util.Log;
