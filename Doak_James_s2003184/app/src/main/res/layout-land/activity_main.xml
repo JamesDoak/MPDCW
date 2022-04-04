@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--James Alexander Doak-->
+<!--S2003184-->
+
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:windowSoftInputMode="stateAlwaysHidden">
+
+
+    <RelativeLayout
+        android:id="@+id/rightRelative"
+        android:layout_width="227dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:id="@+id/leftLinear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/roadworksButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Current Works"
+                android:theme="@style/Button.White" />
+
+            <Button
+                android:id="@+id/plannedRoadworksButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Planned Works"
+                android:theme="@style/Button.White" />
+
+            <Button
+                android:id="@+id/currentIncidentsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Current Incidents"
+
+                android:theme="@style/Button.White"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <EditText
+                android:id="@+id/editText1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:ems="10"
+                android:hint="Enter a road to search"
+                android:imeOptions="actionSearch"
+                android:inputType="textPersonName"
+                android:text="" />
+
+            <Button
+                android:id="@+id/clearButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Clear Search"
+                android:theme="@style/Button.White" />
+
+            <TextView
+                android:id="@+id/rawFeedDataDisplay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <ProgressBar
+
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rawFeedDataDisplay"
+                android:layout_centerVertical="true"
+
+                android:layout_marginBottom="0dp"
+                android:background="@color/black"
+                android:max="100"
+                android:progress="45" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/leftRelative"
+        android:layout_width="504dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="0dp"
+        android:layout_toRightOf="@+id/rightRelative">
+
+
+        <ListView
+            android:id="@+id/ListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/black"
+            android:dividerHeight="3dp"
+            android:listSelector="#0f0">
+
+        </ListView>
+
+
+    </RelativeLayout>
+</RelativeLayout>
+
+<!--<RelativeLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".MainActivity"-->
+<!--    android:windowSoftInputMode="stateAlwaysHidden">-->
+
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearlayout1"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="49dp"-->
+<!--        android:layout_marginTop="0dp"-->
+<!--        android:orientation="horizontal">-->
+
+<!--&lt;!&ndash;        <Button&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/roadworksButton"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="48dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_weight="0.33"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:theme="@style/Button.White"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:insetBottom="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="Current Works" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;        <Button&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/plannedRoadworksButton"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:theme="@style/Button.White"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="48dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_weight="0.33"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:insetBottom="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="Planned Works" />&ndash;&gt;-->
+
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearlayout2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="49dp"-->
+<!--        android:insetBottom="200px"-->
+<!--        android:layout_below="@id/linearlayout1"-->
+<!--        android:layout_marginTop="0dp"-->
+<!--        android:orientation="vertical">-->
+
+<!--&lt;!&ndash;        <Button&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/currentIncidentsButton"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:theme="@style/Button.White"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="48dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:insetBottom="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="Current Incidents"&ndash;&gt;-->
+<!--&lt;!&ndash;            tools:ignore="TouchTargetSizeCheck" />&ndash;&gt;-->
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearlayout3"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="49dp"-->
+<!--        android:layout_marginTop="0dp"-->
+<!--        android:layout_below="@id/linearlayout2"-->
+<!--        android:orientation="horizontal">-->
+
+
+<!--&lt;!&ndash;        <EditText&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/editText1"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="153dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="48dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_weight="1"&ndash;&gt;-->
+
+<!--&lt;!&ndash;            android:hint="Enter a road to search"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:ems="10"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:inputType="textPersonName"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text=""&ndash;&gt;-->
+<!--&lt;!&ndash;            android:imeOptions="actionSearch"&ndash;&gt;-->
+<!--&lt;!&ndash;            />&ndash;&gt;-->
+
+<!--&lt;!&ndash;        <Button&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/clearButton"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="48dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:theme="@style/Button.White"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_weight="1"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="Clear Search" />&ndash;&gt;-->
+<!--    </LinearLayout>-->
+
+<!--&lt;!&ndash;    <LinearLayout&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/linearlayout4"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="52dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_below="@id/linearlayout3"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:orientation="horizontal">&ndash;&gt;-->
+
+<!--&lt;!&ndash;        <EditText&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/editTextDate"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="151dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_weight="1"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:ems="10"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:inputType="date" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;        <Button&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/button5"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_weight="1"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:insetTop="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:insetBottom="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="Search Date" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;    </LinearLayout>&ndash;&gt;-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearlayout5"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginVertical="10dp"-->
+<!--        android:layout_below="@id/linearlayout3"-->
+<!--        android:orientation="horizontal">-->
+
+
+<!--&lt;!&ndash;        <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/rawFeedDataDisplay"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@color/black"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_marginTop="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:textSize="18sp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:textColor="@color/white"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_marginBottom="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:gravity="center"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_weight="1"/>&ndash;&gt;-->
+
+<!--    </LinearLayout>-->
+
+<!--&lt;!&ndash;    <ProgressBar&ndash;&gt;-->
+
+<!--&lt;!&ndash;        android:id="@+id/progressBar"&ndash;&gt;-->
+<!--&lt;!&ndash;        style="?android:attr/progressBarStyleHorizontal"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_below="@id/linearlayout5"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_centerVertical="true"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_marginTop="-12dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_marginBottom="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:background="@color/black"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:max="100"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:progress="45" />&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;    <ListView&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/ListView"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_below="@id/linearlayout5"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_marginTop="-10dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:divider="@color/black"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:dividerHeight="3dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:listSelector="#0f0">&ndash;&gt;-->
+
+<!--&lt;!&ndash;    </ListView>&ndash;&gt;-->
+
+
+
+<!--</RelativeLayout>-->
