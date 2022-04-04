@@ -25,12 +25,14 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_weight="0.33"
+            android:theme="@style/Button.White"
             android:insetBottom="0dp"
             android:text="Current Works" />
 
         <Button
             android:id="@+id/plannedRoadworksButton"
             android:layout_width="wrap_content"
+            android:theme="@style/Button.White"
             android:layout_height="48dp"
             android:layout_weight="0.33"
             android:insetBottom="0dp"
@@ -50,6 +52,7 @@
         <Button
             android:id="@+id/currentIncidentsButton"
             android:layout_width="match_parent"
+            android:theme="@style/Button.White"
             android:layout_height="48dp"
             android:insetBottom="0dp"
             android:text="Current Incidents"
@@ -70,6 +73,7 @@
             android:layout_width="153dp"
             android:layout_height="48dp"
             android:layout_weight="1"
+
             android:hint="Enter a road to search"
             android:ems="10"
             android:inputType="textPersonName"
@@ -81,6 +85,7 @@
             android:id="@+id/clearButton"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
+            android:theme="@style/Button.White"
             android:layout_weight="1"
             android:text="Clear Search" />
     </LinearLayout>
@@ -125,28 +130,47 @@
             android:layout_width="wrap_content"
             android:background="@color/black"
             android:layout_marginTop="0dp"
+            android:textSize="18sp"
             android:textColor="@color/white"
+            android:layout_marginBottom="0dp"
             android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
     </LinearLayout>
 
+    <ProgressBar
+
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearlayout5"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="-12dp"
+        android:layout_marginBottom="0dp"
+        android:background="@color/black"
+        android:max="100"
+        android:progress="45" />
+
 
     <ListView
         android:id="@+id/ListView"
         android:layout_width="match_parent"
-        android:layout_height="591dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/linearlayout5"
-        android:layout_marginTop="-13dp"
+        android:layout_marginTop="-10dp"
         android:divider="@color/black"
         android:dividerHeight="3dp"
-        android:listSelector="#0f0"></ListView>
+        android:listSelector="#0f0">
+
+    </ListView>
 
 
 
 </RelativeLayout>
 
+<!--OLD LAYOUT-->
 <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
 <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
 <!--    xmlns:tools="http://schemas.android.com/tools"-->

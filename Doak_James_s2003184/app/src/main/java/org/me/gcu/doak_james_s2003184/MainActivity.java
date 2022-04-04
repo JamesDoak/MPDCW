@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private ArrayList itemList = new ArrayList<>();
     private ListView itemListView;
     private TextView label;
+    private ProgressBar progressBar;
 
 
 
@@ -82,7 +83,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         // More Code goes here
         label = (TextView) findViewById(R.id.label);
         itemListView = (ListView) findViewById(R.id.ListView);
-
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
+        progressBar.setIndeterminate(false);
 
         ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
         ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
@@ -127,15 +130,18 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         switch(chosenButton){
             case 1:
                 new Thread(new Task(urlSourceA, 1)).start();
-//                progressBar();
+                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setIndeterminate(true);
                 break;
             case 2:
                 new Thread(new Task(urlSourceB, 2)).start();
-//                progressBar();
+                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setIndeterminate(true);
                 break;
             case 3:
                 new Thread(new Task(urlSourceC, 3)).start();
-//                progressBar();
+                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setIndeterminate(true);
                 break;
         }
     }
@@ -181,6 +187,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
                 itemListView.setAdapter(adapter);
                 roadSearch.setText("");
+                rawFeedDataDisplay.setText("Displaying " + itemsArrayList.size() + " results");
 
         }
 
@@ -212,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                             ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, matched);
                             itemListView.setAdapter(adapter);
                             hideKeyboard(MainActivity.this);
+                            rawFeedDataDisplay.setText("Displaying search results: " + roadSearch.getText().toString());
 
                         }
 
@@ -299,7 +307,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                     //set and display the list view
                     ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
                     itemListView.setAdapter(adapter);
-                    rawFeedDataDisplay.setText("Displaying results");
+                    rawFeedDataDisplay.setText("Displaying "+itemsArrayList.size()+" results");
+                    progressBar.setVisibility(View.INVISIBLE);
 
 
                 }
