@@ -6,12 +6,15 @@ package org.me.gcu.doak_james_s2003184;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private Button plannedRoadworksButton;
     private Button roadworksButton;
     private Button currentIncidentsButton;
-    private Button searchButton;
+    private Button clearButton;
     private String result = "";
     private String url1="";
     private final String urlSourceA="https://trafficscotland.org/rss/feeds/plannedroadworks.aspx";
@@ -72,8 +75,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         roadworksButton.setOnClickListener(this);
         currentIncidentsButton = (Button)findViewById(R.id.currentIncidentsButton);
         currentIncidentsButton.setOnClickListener(this);
-        searchButton = (Button)findViewById(R.id.searchButton);
-        searchButton.setOnClickListener(this);
+        clearButton = (Button)findViewById(R.id.clearButton);
+        clearButton.setOnClickListener(this);
         roadSearch = (EditText)findViewById(R.id.editText1);
         Log.e("MyTag","after feedAButton");
         // More Code goes here
@@ -85,35 +88,37 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
 
         itemListView.setAdapter(adapter);
-        itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                rawFeedDataDisplay.setText("Clicked item number: " + position);
-                Object item;
-                item = itemListView.getItemAtPosition(position);
-
-                //get current position
-                Integer pos = position;
-                Log.e("Position: ", pos.toString());
-//                Log.e("ArrayList", itemsArrayList.toString());
-
-                if (!itemList.isEmpty()) {
-                    itemList.clear();
-                    ArrayAdapter adapter1 = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
-
-                    Log.d("Object", item.toString());
-                    itemListView.setAdapter(adapter1);
-                }else{
-                itemList.add(item);
-                ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
-
-                Log.d("Object", item.toString());
-                itemListView.setAdapter(adapter2);
-                }
-            }
-        });
+//        itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//
+//                rawFeedDataDisplay.setText("Clicked item number: " + position);
+//                Object item;
+//                item = itemListView.getItemAtPosition(position);
+//
+//                //get current position
+//                Integer pos = position;
+//                Log.e("Position: ", pos.toString());
+////                Log.e("ArrayList", itemsArrayList.toString());
+//
+//                if (!itemList.isEmpty()) {
+//                    itemList.clear();
+//                    ArrayAdapter adapter1 = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
+//
+//                    Log.d("Object", item.toString());
+//                    itemListView.setAdapter(adapter1);
+//                }else{
+//                itemList.add(item);
+//                ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
+//
+//                Log.d("Object", item.toString());
+//                itemListView.setAdapter(adapter2);
+//                }
+//            }
+//        });
 
     }
 
@@ -171,29 +176,63 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             Log.e("MyTag","after startProgress");
         }
 
-        if (v == searchButton){
+        if (v == clearButton){
 
-            String userSEntry = roadSearch.getText().toString();
-            Log.d("User Input: ", userSEntry); //works - returns user entry
-
-            if(userSEntry.isEmpty()){
-                rawFeedDataDisplay.setText("Please enter a search term");
-            }
-            else {
-
-                ArrayList<Items> matched = new ArrayList<Items>();
-                for (Items item : itemsArrayList) {
-                    if (item.getTitle().toLowerCase(Locale.ROOT).contains(userSEntry)) {
-                        matched.add(item);
-                    }
-                }
-                Log.e("Matched: ", matched.toString());
-                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, matched);
+                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
                 itemListView.setAdapter(adapter);
-            }
+                roadSearch.setText("");
+
         }
 
+        //return the search results from the text entry
+        //the code will also run from pressing the enter key
+        //on the virtual keyboard, and then minimise it
+        roadSearch.setOnKeyListener(new AdapterView.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                    if ((keyCode == KeyEvent.KEYCODE_DPAD_CENTER) ||
+                            (keyCode == KeyEvent.KEYCODE_ENTER))
+                    {
+                        String userSEntry = roadSearch.getText().toString();
+                        Log.d("User Input: ", userSEntry); //works - returns user entry
+
+                        if(userSEntry.isEmpty()){
+                            rawFeedDataDisplay.setText("Please enter a search term");
+                        }
+                        else {
+
+                            ArrayList<Items> matched = new ArrayList<Items>();
+                            for (Items item : itemsArrayList) {
+                                if (item.getTitle().toLowerCase(Locale.ROOT).contains(userSEntry)) {
+                                    matched.add(item);
+                                }
+                            }
+                            Log.e("Matched: ", matched.toString());
+
+                            ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, matched);
+                            itemListView.setAdapter(adapter);
+                            hideKeyboard(MainActivity.this);
+
+                        }
+
+                        return true;
+                    }
+                return false;
+            }
+        });
+
     }
+
+    //function to hide the virtual keyboard
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
 
 
     // Need separate thread to access the internet resource over network
@@ -250,12 +289,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
                     //set the parser for future use
                     Parser p = new Parser();
-//
-//                    //run the data through the parser
-//                    p.parseData(xmlCopy.toString());
 
-                    //create a copy of the XML stream data, stored locally
-                    //pass this copy to parser.
                     String xmlCopy = result;
                     Log.d("(XML COPY): ", xmlCopy);
 
