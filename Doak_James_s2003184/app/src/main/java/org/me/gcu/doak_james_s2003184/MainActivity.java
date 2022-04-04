@@ -151,6 +151,31 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         this.itemListView.setAdapter(null);
     }
 
+    public void loadingButtons(){
+        plannedRoadworksButton.setEnabled(false);
+        roadworksButton.setEnabled(false);
+        currentIncidentsButton.setEnabled(false);
+        plannedRoadworksButton.setText("Loading...");
+        roadworksButton.setText("Loading...");
+        currentIncidentsButton.setText("Loading...");
+        clearButton.setEnabled(false);
+        clearButton.setText("Loading...");
+        roadSearch.setEnabled(false);
+    }
+
+    public void dataButtonsParsed()
+    {
+        plannedRoadworksButton.setEnabled(true);
+        roadworksButton.setEnabled(true);
+        currentIncidentsButton.setEnabled(true);
+        clearButton.setEnabled(true);
+        plannedRoadworksButton.setText("Planned Works");
+        roadworksButton.setText("Current Works");
+        currentIncidentsButton.setText("Current Incidents");
+        clearButton.setText("Clear Search");
+        roadSearch.setEnabled(true);
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -158,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     {
 
         if (v == plannedRoadworksButton) {
+            loadingButtons();
             removeList();
             Log.e("MyTag","in onClick");
             rawFeedDataDisplay.setText("Loading all Planned Roadworks");
@@ -166,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             Log.e("MyTag","after startProgress");
         }
         if (v == roadworksButton) {
+            loadingButtons();
             removeList();
             Log.e("MyTag","in onClick");
             rawFeedDataDisplay.setText("Loading all Current Roadworks");
@@ -174,6 +201,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             Log.e("MyTag","after startProgress");
         }
         if (v == currentIncidentsButton) {
+            loadingButtons();
             removeList();
             Log.e("MyTag","in onClick");
             rawFeedDataDisplay.setText("Loading all Current Incidents");
@@ -216,11 +244,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                             }
                             Log.e("Matched: ", matched.toString());
 
-                            ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, matched);
-                            itemListView.setAdapter(adapter);
-                            hideKeyboard(MainActivity.this);
-                            rawFeedDataDisplay.setText("Displaying search results: " + roadSearch.getText().toString());
+                            if(matched.isEmpty()){
+                                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
+                                itemListView.setAdapter(adapter);
+                                hideKeyboard(MainActivity.this);
+                                rawFeedDataDisplay.setText("Road not found");
+                            }
+                            else {
 
+                                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, matched);
+                                itemListView.setAdapter(adapter);
+                                hideKeyboard(MainActivity.this);
+                                rawFeedDataDisplay.setText("Displaying search results: " + roadSearch.getText().toString());
+                            }
                         }
 
                         return true;
@@ -309,6 +345,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                     itemListView.setAdapter(adapter);
                     rawFeedDataDisplay.setText("Displaying "+itemsArrayList.size()+" results");
                     progressBar.setVisibility(View.INVISIBLE);
+                    dataButtonsParsed();
 
 
                 }

@@ -64,42 +64,42 @@ public class Parser {
                                 Log.e("MyTag","description is " + description);
                                 item.setDescription(description);
                             }
-                            else
-                            if (xpp.getName().equalsIgnoreCase("link"))
-                            {
-                                // Now just get the associated text
-                                String link = xpp.nextText();
-                                // Do something with text
-                                Log.e("MyTag","link is " + link);
-                                item.setLink(link);
-                            }
-                            else
-                            if (xpp.getName().equalsIgnoreCase("point"))
-                            {
-                                // Now just get the associated text
-                                String georss = xpp.nextText();
-                                // Do something with text
-                                Log.e("MyTag","georss is " + georss);
-                                item.setGeorss(georss);
-                            }
-                            else
-                            if (xpp.getName().equalsIgnoreCase("author"))
-                            {
-                                // Now just get the associated text
-                                String author = xpp.nextText();
-                                // Do something with text
-                                Log.e("MyTag","author is " + author);
-                                item.setAuthor(author);
-                            }
-                            else
-                            if (xpp.getName().equalsIgnoreCase("comments"))
-                            {
-                                // Now just get the associated text
-                                String comments = xpp.nextText();
-                                // Do something with text
-                                Log.e("MyTag","comments is " + comments);
-                                item.setComments(comments);
-                            }
+//                            else
+//                            if (xpp.getName().equalsIgnoreCase("link"))
+//                            {
+//                                // Now just get the associated text
+//                                String link = xpp.nextText();
+//                                // Do something with text
+//                                Log.e("MyTag","link is " + link);
+//                                item.setLink(link);
+//                            }
+//                            else
+//                            if (xpp.getName().equalsIgnoreCase("point"))
+//                            {
+//                                // Now just get the associated text
+//                                String georss = xpp.nextText();
+//                                // Do something with text
+//                                Log.e("MyTag","georss is " + georss);
+//                                item.setGeorss(georss);
+//                            }
+//                            else
+//                            if (xpp.getName().equalsIgnoreCase("author"))
+//                            {
+//                                // Now just get the associated text
+//                                String author = xpp.nextText();
+//                                // Do something with text
+//                                Log.e("MyTag","author is " + author);
+//                                item.setAuthor(author);
+//                            }
+//                            else
+//                            if (xpp.getName().equalsIgnoreCase("comments"))
+//                            {
+//                                // Now just get the associated text
+//                                String comments = xpp.nextText();
+//                                // Do something with text
+//                                Log.e("MyTag","comments is " + comments);
+//                                item.setComments(comments);
+//                            }
                             else
                             if (xpp.getName().equalsIgnoreCase("pubDate"))
                             {

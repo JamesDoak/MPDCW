@@ -10,10 +10,10 @@ public class Items {
     //variables
     private String title;
     private String description;
-    private String link;
-    private String georss;
-    private String author;
-    private String comments;
+//    private String link;
+//    private String georss;
+//    private String author;
+//    private String comments;
     private String pubDate;
     private ArrayList<Items> item = new ArrayList<Items>();
 
@@ -39,33 +39,33 @@ public class Items {
         description = descriptionIn;
     }
 
-    public String getLink(){
-        return link;
-    }
-    public void setLink(String linkIn){
-        link = linkIn;
-    }
-
-    public String getGeorss(){
-        return georss;
-    }
-    public void setGeorss(String georssIn){
-        georss = georssIn;
-    }
-
-    public String getAuthor(){
-        return author;
-    }
-    public void setAuthor(String authorIn){
-        author = authorIn;
-    }
-
-    public String getComments(){
-        return comments;
-    }
-    public void setComments(String commentIn){
-        comments = commentIn;
-    }
+//    public String getLink(){
+//        return link;
+//    }
+//    public void setLink(String linkIn){
+//        link = linkIn;
+//    }
+//
+//    public String getGeorss(){
+//        return georss;
+//    }
+//    public void setGeorss(String georssIn){
+//        georss = georssIn;
+//    }
+//
+//    public String getAuthor(){
+//        return author;
+//    }
+//    public void setAuthor(String authorIn){
+//        author = authorIn;
+//    }
+//
+//    public String getComments(){
+//        return comments;
+//    }
+//    public void setComments(String commentIn){
+//        comments = commentIn;
+//    }
 
     public String getPubDate(){
         return pubDate;
@@ -79,8 +79,8 @@ public class Items {
         output = "• Road: "+title
                 + "\n• Description: "
                 + removeBRTags(description)
-                + "\n• Link: " + link
-                + "\n• geoRSS: " + georss
+//                + "\n• Link: " + link
+//                + "\n• geoRSS: " + georss
                 + "\n• Published: " + pubDate;
         return output;
     }
@@ -89,10 +89,10 @@ public class Items {
     public Items() {
         title = "";
         description = "";
-        link = "";
-        georss = "";
-        author = "";
-        comments = "";
+//        link = "";
+//        georss = "";
+//        author = "";
+//        comments = "";
         pubDate = "";
     }
 
@@ -102,10 +102,10 @@ public class Items {
                      String commentsIn, String pubdateIn){
         title = titleIn;
         description = descriptionIn;
-        link = linkIn;
-        georss = georssIn;
-        author = authorIn;
-        comments = commentsIn;
+//        link = linkIn;
+//        georss = georssIn;
+//        author = authorIn;
+//        comments = commentsIn;
         pubDate = pubdateIn;
     }
 
