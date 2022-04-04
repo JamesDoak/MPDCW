@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+//    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View v)
     {
