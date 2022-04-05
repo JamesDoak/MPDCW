@@ -2,14 +2,11 @@
 //S2003184
 
 package org.me.gcu.doak_james_s2003184;
-
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.os.Build;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -18,26 +15,32 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.sql.Array;
+import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener
 {
     private TextView rawFeedDataDisplay;
     private EditText roadSearch;
+    private EditText dateSearch;
     private Button plannedRoadworksButton;
     private Button roadworksButton;
     private Button currentIncidentsButton;
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private TextView label;
     private ProgressBar progressBar;
 
-
+    private DatePickerDialog picker;
 
     public MainActivity() {
 
@@ -63,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -78,7 +80,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         currentIncidentsButton.setOnClickListener(this);
         clearButton = (Button)findViewById(R.id.clearButton);
         clearButton.setOnClickListener(this);
+
         roadSearch = (EditText)findViewById(R.id.editText1);
+        dateSearch = (EditText)findViewById(R.id.editText2);
+
         Log.e("MyTag","after feedAButton");
         // More Code goes here
         label = (TextView) findViewById(R.id.label);
@@ -92,6 +97,110 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
         itemListView.setAdapter(adapter);
 
+        dateSearch.setOnClickListener(new AdapterView.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+
+                int year = cldr.get(Calendar.YEAR);
+
+                String[] days = {"01","02","03","04","05","06","07","08","09","10","11","13","14",
+                        "15","16","17","18","19","20","21","22","23","24","25","26","27","28","29",
+                        "30","31"};
+
+
+                // date picker dialog
+                picker = new DatePickerDialog(MainActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                                String dayFinal = "" + dayOfMonth;
+                                    switch(dayFinal){
+                                        case "1":{dayFinal = "01";break;}
+                                        case "2":{dayFinal = "02";break;}
+                                        case "3":{dayFinal = "03";break;}
+                                        case "4":{dayFinal = "04";break;}
+                                        case "5":{dayFinal = "05";break;}
+                                        case "6":{dayFinal = "06";break;}
+                                        case "7":{dayFinal = "07";break;}
+                                        case "8":{dayFinal = "08";break;}
+                                        case "9":{dayFinal = "09";break;}
+                                    }
+                                String monthFinal = "";
+                                    switch(monthOfYear){
+                                        case 0:monthFinal = "January"; break;
+                                        case 1:monthFinal = "February";break;
+                                        case 2:monthFinal = "March";break;
+                                        case 3:monthFinal = "April";break;
+                                        case 4:monthFinal = "May";break;
+                                        case 5:monthFinal = "June";break;
+                                        case 6:monthFinal = "July";break;
+                                        case 7:monthFinal = "August";break;
+                                        case 8:monthFinal = "September";break;
+                                        case 9:monthFinal = "October";break;
+                                        case 10:monthFinal = "November";break;
+                                        case 11:monthFinal = "December";break;
+                                    }
+
+                                Log.e("Day:", dayFinal);
+                                dateSearch.setText(dayFinal + " " + monthFinal + " " + year);
+                            }
+                        }, year, month, day);
+                picker.show();
+            }
+        });
+
+        dateSearch.setOnKeyListener(new AdapterView.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                    if ((keyCode == KeyEvent.KEYCODE_DPAD_CENTER) ||
+                            (keyCode == KeyEvent.KEYCODE_ENTER))
+                    {
+                        String userSEntry = String.format(dateSearch.getText().toString(), "MMMM dd yyyy");
+                        Log.d("User Input: ", userSEntry); //works - returns user entry
+
+                        if(userSEntry.isEmpty()){
+                            rawFeedDataDisplay.setText("Please enter a search term");
+                        }
+                        else {
+
+                            ArrayList<Items> matched = new ArrayList<Items>();
+
+                            for (Items item : itemsArrayList)
+                            {
+                                if (item.getDescription().contains(userSEntry)) {
+                                    matched.add(item);
+                                }
+
+                            }
+                            Log.e("Matched: ", matched.toString());
+
+                            if(matched.isEmpty())
+                            {
+                                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
+                                itemListView.setAdapter(adapter);
+                                hideKeyboard(MainActivity.this);
+                                rawFeedDataDisplay.setText("Date not found");
+                                dateSearch.setText("");
+                            }
+                            else
+                            {
+                                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, matched);
+                                itemListView.setAdapter(adapter);
+                                hideKeyboard(MainActivity.this);
+                                rawFeedDataDisplay.setText("Displaying search results: " + roadSearch.getText().toString());
+                                dateSearch.setText("");
+                            }
+                        }
+
+                        return true;
+                    }
+                return false;
+            }
+        });
 
 //        itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //
@@ -122,8 +231,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 //                }
 //            }
 //        });
-
     }
+
 
     public void startProgressMain(int chosenButton){
         //feedChoice is new - code further below
@@ -161,6 +270,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         clearButton.setEnabled(false);
         clearButton.setText("Loading...");
         roadSearch.setEnabled(false);
+        dateSearch.setEnabled(false);
     }
 
     public void dataButtonsParsed()
@@ -174,15 +284,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         currentIncidentsButton.setText("Current Incidents");
         clearButton.setText("Clear Search");
         roadSearch.setEnabled(true);
+        dateSearch.setEnabled(true);
     }
-
 
 //    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View v)
     {
 
-        if (v == plannedRoadworksButton) {
+
+        if (v == plannedRoadworksButton)
+        {
             loadingButtons();
             removeList();
             Log.e("MyTag","in onClick");
@@ -191,7 +303,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             itemList.clear();
             Log.e("MyTag","after startProgress");
         }
-        if (v == roadworksButton) {
+        if (v == roadworksButton)
+        {
             loadingButtons();
             removeList();
             Log.e("MyTag","in onClick");
@@ -200,7 +313,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             itemList.clear();
             Log.e("MyTag","after startProgress");
         }
-        if (v == currentIncidentsButton) {
+        if (v == currentIncidentsButton)
+        {
             loadingButtons();
             removeList();
             Log.e("MyTag","in onClick");
@@ -211,12 +325,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         }
 
         if (v == clearButton){
-
                 ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
                 itemListView.setAdapter(adapter);
                 roadSearch.setText("");
                 rawFeedDataDisplay.setText("Displaying " + itemsArrayList.size() + " results");
-
         }
 
         //return the search results from the text entry
@@ -237,21 +349,23 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                         else {
 
                             ArrayList<Items> matched = new ArrayList<Items>();
-                            for (Items item : itemsArrayList) {
+                            for (Items item : itemsArrayList)
+                            {
                                 if (item.getTitle().toLowerCase(Locale.ROOT).contains(userSEntry)) {
                                     matched.add(item);
                                 }
                             }
                             Log.e("Matched: ", matched.toString());
 
-                            if(matched.isEmpty()){
+                            if(matched.isEmpty())
+                            {
                                 ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
                                 itemListView.setAdapter(adapter);
                                 hideKeyboard(MainActivity.this);
                                 rawFeedDataDisplay.setText("Road not found");
                             }
-                            else {
-
+                            else
+                            {
                                 ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, matched);
                                 itemListView.setAdapter(adapter);
                                 hideKeyboard(MainActivity.this);
@@ -265,6 +379,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             }
         });
 
+
     }
 
     //function to hide the virtual keyboard
@@ -276,8 +391,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-
-
 
     // Need separate thread to access the internet resource over network
     // Other neater solutions should be adopted in later iterations.
@@ -331,6 +444,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 public void run() {
                     Log.d("UI thread", "I am the UI thread");
 
+
                     //set the parser for future use
                     Parser p = new Parser();
 
@@ -347,6 +461,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                     progressBar.setVisibility(View.INVISIBLE);
                     dataButtonsParsed();
 
+                    Log.d("Array Data", itemsArrayList.toString());
+                    Log.e("XML Stream",result.toString());
 
                 }
             });

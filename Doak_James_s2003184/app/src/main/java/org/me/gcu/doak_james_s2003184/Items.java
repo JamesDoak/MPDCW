@@ -3,7 +3,12 @@
 
 package org.me.gcu.doak_james_s2003184;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class Items {
 
@@ -33,7 +38,7 @@ public class Items {
     }
 
     public String getDescription(){
-        return title;
+        return description;
     }
     public void setDescription(String descriptionIn){
         description = descriptionIn;
@@ -95,8 +100,6 @@ public class Items {
 //        comments = "";
         pubDate = "";
     }
-
-
 
     public Items(String titleIn, String descriptionIn, String linkIn, String georssIn, String authorIn,
                      String commentsIn, String pubdateIn){
