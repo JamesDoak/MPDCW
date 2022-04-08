@@ -266,11 +266,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         plannedRoadworksButton.setEnabled(false);
         roadworksButton.setEnabled(false);
         currentIncidentsButton.setEnabled(false);
-        plannedRoadworksButton.setText("Loading");
-        roadworksButton.setText("Loading");
-        currentIncidentsButton.setText("Loading");
         clearButton.setEnabled(false);
-        clearButton.setText("Loading");
         roadSearch.setEnabled(false);
         dateSearch.setEnabled(false);
     }
@@ -302,6 +298,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         }
 
     }
+    public void setDefaultButtonStyle(View view){
+        int blackBackground = ContextCompat.getColor(MainActivity.this, R.color.black);
+        view.setBackgroundColor(blackBackground);
+
+    }
 
 
 //    @RequiresApi(api = Build.VERSION_CODES.N)
@@ -309,12 +310,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     public void onClick(View v)
     {
         int blackBackground = ContextCompat.getColor(MainActivity.this, R.color.black);
+        int whiteText = ContextCompat.getColor(MainActivity.this, R.color.white);
 
         if (v == plannedRoadworksButton)
         {
             activeButton(true, v);
-            roadworksButton.setBackgroundColor(blackBackground);
-            currentIncidentsButton.setBackgroundColor(blackBackground);
+            roadworksButton.setEnabled(false);
+            currentIncidentsButton.setEnabled(false);
+            setDefaultButtonStyle(roadworksButton);
+            setDefaultButtonStyle(currentIncidentsButton);
             loadingButtons();
             removeList();
             Log.e("MyTag","in onClick");
@@ -326,8 +330,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         if (v == roadworksButton)
         {
             activeButton(true, v);
-            plannedRoadworksButton.setBackgroundColor(blackBackground);
-            currentIncidentsButton.setBackgroundColor(blackBackground);
+            plannedRoadworksButton.setEnabled(false);
+            currentIncidentsButton.setEnabled(false);
+            setDefaultButtonStyle(plannedRoadworksButton);
+            setDefaultButtonStyle(currentIncidentsButton);
             loadingButtons();
             removeList();
             Log.e("MyTag","in onClick");
@@ -338,9 +344,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         }
         if (v == currentIncidentsButton)
         {
+
+
             activeButton(true, v);
-            plannedRoadworksButton.setBackgroundColor(blackBackground);
-            roadworksButton.setBackgroundColor(blackBackground);
+            plannedRoadworksButton.setEnabled(false);
+            roadworksButton.setEnabled(false);
+            setDefaultButtonStyle(plannedRoadworksButton);
+            setDefaultButtonStyle(roadworksButton);
             loadingButtons();
             removeList();
             Log.e("MyTag","in onClick");

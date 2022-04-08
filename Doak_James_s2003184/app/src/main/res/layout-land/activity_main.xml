@@ -30,15 +30,13 @@
                 android:id="@+id/roadworksButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Current Works"
-                android:theme="@style/Button.White" />
+                android:text="Current Works" />
 
             <Button
                 android:id="@+id/plannedRoadworksButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Planned Works"
-                android:theme="@style/Button.White" />
+                android:text="Planned Works" />
 
             <Button
                 android:id="@+id/currentIncidentsButton"
@@ -46,7 +44,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Current Incidents"
-                android:theme="@style/Button.White"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <EditText
@@ -74,8 +71,7 @@
                 android:id="@+id/clearButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Clear Search"
-                android:theme="@style/Button.White" />
+                android:text="Clear Search"/>
 
             <TextView
                 android:id="@+id/rawFeedDataDisplay"

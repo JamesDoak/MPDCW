@@ -16,7 +16,7 @@
     </style>
 
 
-    <style name="Button.White" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorAccent">@android:color/white</item>
-    </style>
+<!--    <style name="Button.White" parent="Theme.MaterialComponents.DayNight.DarkActionBar">-->
+<!--        <item name="colorAccent">@android:color/white</item>-->
+<!--    </style>-->
 </resources>
