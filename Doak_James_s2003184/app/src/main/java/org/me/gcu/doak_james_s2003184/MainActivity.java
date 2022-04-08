@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private TextView rawFeedDataDisplay;
     private EditText roadSearch;
     private EditText dateSearch;
-    private EditText editText1;
-    private EditText editText2;
+    private EditText roadSearchEntry;
+    private EditText dateSearchEntry;
     private Button plannedRoadworksButton;
     private Button roadworksButton;
     private Button currentIncidentsButton;
@@ -59,8 +59,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private ListView itemListView;
     private TextView label;
     private ProgressBar progressBar;
-
     private DatePickerDialog picker;
+    private CustomArrayAdaptor cAdaptor;
+
 
     public MainActivity() {
 
@@ -85,8 +86,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         clearButton = (Button)findViewById(R.id.clearButton);
         clearButton.setOnClickListener(this);
 
-        roadSearch = (EditText)findViewById(R.id.editText1);
-        dateSearch = (EditText)findViewById(R.id.editText2);
+        roadSearch = (EditText)findViewById(R.id.roadSearchEntry);
+        dateSearch = (EditText)findViewById(R.id.dateSearchEntry);
 
         Log.e("MyTag","after feedAButton");
         // More Code goes here
@@ -96,10 +97,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         progressBar.setVisibility(View.INVISIBLE);
         progressBar.setIndeterminate(false);
 
-        editText1 = findViewById(R.id.editText1);
-        editText1.setOnClickListener(this);
-        editText2 = findViewById(R.id.editText2);
-        editText2.setOnClickListener(this);
+        roadSearchEntry = findViewById(R.id.roadSearchEntry);
+        roadSearchEntry.setOnClickListener(this);
+        dateSearchEntry = findViewById(R.id.dateSearchEntry);
+        dateSearchEntry.setOnClickListener(this);
+
+        dateSearch.setEnabled(true);
 
         ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
         ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
@@ -203,35 +206,35 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             }
         });
 
-        itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
-//                rawFeedDataDisplay.setText("Clicked item number: " + position);
-                Object item;
-                item = itemListView.getItemAtPosition(position);
-
-                //get current position
-                Integer pos = position;
-                Log.e("Position: ", pos.toString());
-//                Log.e("ArrayList", itemsArrayList.toString());
-
-                if (!itemList.isEmpty()) {
-                    itemList.clear();
-                    ArrayAdapter adapter1 = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
-
-                    Log.d("Object", item.toString());
-                    itemListView.setAdapter(adapter1);
-                }else{
-                itemList.add(item);
-                ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
-
-                Log.d("Object", item.toString());
-                itemListView.setAdapter(adapter2);
-                }
-            }
-        });
+//        itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//
+////                rawFeedDataDisplay.setText("Clicked item number: " + position);
+//                Object item;
+//                item = itemListView.getItemAtPosition(position);
+//
+//                //get current position
+//                Integer pos = position;
+//                Log.e("Position: ", pos.toString());
+////                Log.e("ArrayList", itemsArrayList.toString());
+//
+//                if (!itemList.isEmpty()) {
+//                    itemList.clear();
+//                    ArrayAdapter adapter1 = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
+//
+//                    Log.d("Object", item.toString());
+//                    itemListView.setAdapter(adapter1);
+//                }else{
+//                itemList.add(item);
+//                ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
+//
+//                Log.d("Object", item.toString());
+//                itemListView.setAdapter(adapter2);
+//                }
+//            }
+//        });
     }
 
 
@@ -268,7 +271,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         currentIncidentsButton.setEnabled(false);
         clearButton.setEnabled(false);
         roadSearch.setEnabled(false);
-        dateSearch.setEnabled(false);
     }
 
     public void dataButtonsParsed()
@@ -277,17 +279,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         roadworksButton.setEnabled(true);
         currentIncidentsButton.setEnabled(true);
         clearButton.setEnabled(true);
-        plannedRoadworksButton.setText("Planned Works");
-        roadworksButton.setText("Current Works");
-        currentIncidentsButton.setText("Current Incidents");
-        clearButton.setText("Clear Search");
         roadSearch.setEnabled(true);
-        dateSearch.setEnabled(true);
     }
 
 
     public void activeButton(Boolean click, View view){
         Boolean isClicked = click;
+
         int tealBackground = ContextCompat.getColor(MainActivity.this, R.color.teal_200);
         int blackBackground = ContextCompat.getColor(MainActivity.this, R.color.black);
 //        int whiteText = ContextCompat.getColor(MainActivity.this, R.color.white);
@@ -314,12 +312,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
         if (v == plannedRoadworksButton)
         {
+
             activeButton(true, v);
-            roadworksButton.setEnabled(false);
-            currentIncidentsButton.setEnabled(false);
             setDefaultButtonStyle(roadworksButton);
             setDefaultButtonStyle(currentIncidentsButton);
             loadingButtons();
+            dateSearch.setEnabled(true);
             removeList();
             Log.e("MyTag","in onClick");
             rawFeedDataDisplay.setText("Loading all Planned Roadworks");
@@ -330,11 +328,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         if (v == roadworksButton)
         {
             activeButton(true, v);
-            plannedRoadworksButton.setEnabled(false);
-            currentIncidentsButton.setEnabled(false);
             setDefaultButtonStyle(plannedRoadworksButton);
             setDefaultButtonStyle(currentIncidentsButton);
             loadingButtons();
+            dateSearch.setEnabled(true);
             removeList();
             Log.e("MyTag","in onClick");
             rawFeedDataDisplay.setText("Loading all Current Roadworks");
@@ -344,13 +341,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         }
         if (v == currentIncidentsButton)
         {
-
-
             activeButton(true, v);
-            plannedRoadworksButton.setEnabled(false);
-            roadworksButton.setEnabled(false);
             setDefaultButtonStyle(plannedRoadworksButton);
             setDefaultButtonStyle(roadworksButton);
+            dateSearch.setEnabled(false);
             loadingButtons();
             removeList();
             Log.e("MyTag","in onClick");
@@ -492,8 +486,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                     itemsArrayList = p.parseData(xmlCopy);
 
                     //set and display the list view
-                    ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
-                    itemListView.setAdapter(adapter);
+//                    ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
+//                    itemListView.setAdapter(adapter);
+
+                    cAdaptor = new CustomArrayAdaptor(MainActivity.this, itemsArrayList);
+                    itemListView.setAdapter(cAdaptor);
+
+
                     rawFeedDataDisplay.setText("Displaying "+itemsArrayList.size()+" results");
                     progressBar.setVisibility(View.INVISIBLE);
                     dataButtonsParsed();

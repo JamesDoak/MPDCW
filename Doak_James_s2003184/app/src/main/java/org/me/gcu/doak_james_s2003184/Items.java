@@ -38,7 +38,7 @@ public class Items {
     }
 
     public String getDescription(){
-        return description;
+        return removeBRTags(description);
     }
     public void setDescription(String descriptionIn){
         description = descriptionIn;
@@ -136,7 +136,7 @@ public class Items {
         String[] stringArray = des.split("<br />");
         String result = "";
         for (int i = 0; i < stringArray.length; i++){
-            result = result + " " + stringArray[i] + " ";
+            result = result + "" + stringArray[i] + " ";
         }
         return result;
     }
