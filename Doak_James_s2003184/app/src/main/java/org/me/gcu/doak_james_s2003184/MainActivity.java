@@ -3,9 +3,11 @@
 
 package org.me.gcu.doak_james_s2003184;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private TextView rawFeedDataDisplay;
     private EditText roadSearch;
     private EditText dateSearch;
+    private EditText editText1;
+    private EditText editText2;
     private Button plannedRoadworksButton;
     private Button roadworksButton;
     private Button currentIncidentsButton;
@@ -87,10 +91,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         Log.e("MyTag","after feedAButton");
         // More Code goes here
         label = (TextView) findViewById(R.id.label);
-        itemListView = (ListView) findViewById(R.id.ListView);
+        itemListView = findViewById(R.id.ListView);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
         progressBar.setIndeterminate(false);
+
+        editText1 = findViewById(R.id.editText1);
+        editText1.setOnClickListener(this);
+        editText2 = findViewById(R.id.editText2);
+        editText2.setOnClickListener(this);
 
         ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
         ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
@@ -103,13 +112,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 final Calendar cldr = Calendar.getInstance();
                 int day = cldr.get(Calendar.DAY_OF_MONTH);
                 int month = cldr.get(Calendar.MONTH);
-
                 int year = cldr.get(Calendar.YEAR);
-
-                String[] days = {"01","02","03","04","05","06","07","08","09","10","11","13","14",
-                        "15","16","17","18","19","20","21","22","23","24","25","26","27","28","29",
-                        "30","31"};
-
 
                 // date picker dialog
                 picker = new DatePickerDialog(MainActivity.this,
@@ -120,29 +123,29 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                                 String dayFinal = "" + dayOfMonth;
                                     switch(dayFinal){
                                         case "1":{dayFinal = "01";break;}
-                                        case "2":{dayFinal = "02";break;}
-                                        case "3":{dayFinal = "03";break;}
-                                        case "4":{dayFinal = "04";break;}
-                                        case "5":{dayFinal = "05";break;}
-                                        case "6":{dayFinal = "06";break;}
-                                        case "7":{dayFinal = "07";break;}
-                                        case "8":{dayFinal = "08";break;}
-                                        case "9":{dayFinal = "09";break;}
+                                            case "2":{dayFinal = "02";break;}
+                                                case "3":{dayFinal = "03";break;}
+                                                    case "4":{dayFinal = "04";break;}
+                                                        case "5":{dayFinal = "05";break;}
+                                                            case "6":{dayFinal = "06";break;}
+                                                                case "7":{dayFinal = "07";break;}
+                                                                    case "8":{dayFinal = "08";break;}
+                                                                        case "9":{dayFinal = "09";break;}
                                     }
                                 String monthFinal = "";
                                     switch(monthOfYear){
-                                        case 0:monthFinal = "January"; break;
-                                        case 1:monthFinal = "February";break;
-                                        case 2:monthFinal = "March";break;
-                                        case 3:monthFinal = "April";break;
-                                        case 4:monthFinal = "May";break;
-                                        case 5:monthFinal = "June";break;
-                                        case 6:monthFinal = "July";break;
-                                        case 7:monthFinal = "August";break;
-                                        case 8:monthFinal = "September";break;
-                                        case 9:monthFinal = "October";break;
-                                        case 10:monthFinal = "November";break;
-                                        case 11:monthFinal = "December";break;
+                                        case 0:{monthFinal = "January"; break;}
+                                            case 1:{monthFinal = "February";break;}
+                                                case 2:{monthFinal = "March";break;}
+                                                    case 3:{monthFinal = "April";break;}
+                                                        case 4:{monthFinal = "May";break;}
+                                                            case 5:{monthFinal = "June";break;}
+                                                                case 6:{monthFinal = "July";break;}
+                                                                    case 7:{monthFinal = "August";break;}
+                                                                        case 8:{monthFinal = "September";break;}
+                                                                            case 9:{monthFinal = "October";break;}
+                                                                                case 10:{monthFinal = "November";break;}
+                                                                                    case 11:{monthFinal = "December";break;}
                                     }
 
                                 Log.e("Day:", dayFinal);
@@ -155,11 +158,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
         dateSearch.setOnKeyListener(new AdapterView.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN)
                     if ((keyCode == KeyEvent.KEYCODE_DPAD_CENTER) ||
                             (keyCode == KeyEvent.KEYCODE_ENTER))
                     {
-                        String userSEntry = String.format(dateSearch.getText().toString(), "MMMM dd yyyy");
+                        String userSEntry = String.format(dateSearch.getText().toString());
                         Log.d("User Input: ", userSEntry); //works - returns user entry
 
                         if(userSEntry.isEmpty()){
@@ -184,15 +186,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                                 itemListView.setAdapter(adapter);
                                 hideKeyboard(MainActivity.this);
                                 rawFeedDataDisplay.setText("Date not found");
-                                dateSearch.setText("");
                             }
                             else
                             {
                                 ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, matched);
                                 itemListView.setAdapter(adapter);
                                 hideKeyboard(MainActivity.this);
-                                rawFeedDataDisplay.setText("Displaying search results: " + roadSearch.getText().toString());
-                                dateSearch.setText("");
+                                rawFeedDataDisplay.setText("Displaying search results: " + dateSearch.getText().toString());
+
                             }
                         }
 
@@ -202,36 +203,37 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             }
         });
 
-//        itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//
+        itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
 //                rawFeedDataDisplay.setText("Clicked item number: " + position);
-//                Object item;
-//                item = itemListView.getItemAtPosition(position);
-//
-//                //get current position
-//                Integer pos = position;
-//                Log.e("Position: ", pos.toString());
-////                Log.e("ArrayList", itemsArrayList.toString());
-//
-//                if (!itemList.isEmpty()) {
-//                    itemList.clear();
-//                    ArrayAdapter adapter1 = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
-//
-//                    Log.d("Object", item.toString());
-//                    itemListView.setAdapter(adapter1);
-//                }else{
-//                itemList.add(item);
-//                ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
-//
-//                Log.d("Object", item.toString());
-//                itemListView.setAdapter(adapter2);
-//                }
-//            }
-//        });
+                Object item;
+                item = itemListView.getItemAtPosition(position);
+
+                //get current position
+                Integer pos = position;
+                Log.e("Position: ", pos.toString());
+//                Log.e("ArrayList", itemsArrayList.toString());
+
+                if (!itemList.isEmpty()) {
+                    itemList.clear();
+                    ArrayAdapter adapter1 = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
+
+                    Log.d("Object", item.toString());
+                    itemListView.setAdapter(adapter1);
+                }else{
+                itemList.add(item);
+                ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
+
+                Log.d("Object", item.toString());
+                itemListView.setAdapter(adapter2);
+                }
+            }
+        });
     }
+
 
 
     public void startProgressMain(int chosenButton){
@@ -264,11 +266,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         plannedRoadworksButton.setEnabled(false);
         roadworksButton.setEnabled(false);
         currentIncidentsButton.setEnabled(false);
-        plannedRoadworksButton.setText("Loading...");
-        roadworksButton.setText("Loading...");
-        currentIncidentsButton.setText("Loading...");
+        plannedRoadworksButton.setText("Loading");
+        roadworksButton.setText("Loading");
+        currentIncidentsButton.setText("Loading");
         clearButton.setEnabled(false);
-        clearButton.setText("Loading...");
+        clearButton.setText("Loading");
         roadSearch.setEnabled(false);
         dateSearch.setEnabled(false);
     }
@@ -287,14 +289,32 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         dateSearch.setEnabled(true);
     }
 
+
+    public void activeButton(Boolean click, View view){
+        Boolean isClicked = click;
+        int tealBackground = ContextCompat.getColor(MainActivity.this, R.color.teal_200);
+        int blackBackground = ContextCompat.getColor(MainActivity.this, R.color.black);
+//        int whiteText = ContextCompat.getColor(MainActivity.this, R.color.white);
+//        int blackText = ContextCompat.getColor(MainActivity.this, R.color.black);
+
+        if(isClicked){
+            view.setBackgroundColor(tealBackground);
+        }
+
+    }
+
+
 //    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View v)
     {
-
+        int blackBackground = ContextCompat.getColor(MainActivity.this, R.color.black);
 
         if (v == plannedRoadworksButton)
         {
+            activeButton(true, v);
+            roadworksButton.setBackgroundColor(blackBackground);
+            currentIncidentsButton.setBackgroundColor(blackBackground);
             loadingButtons();
             removeList();
             Log.e("MyTag","in onClick");
@@ -305,6 +325,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         }
         if (v == roadworksButton)
         {
+            activeButton(true, v);
+            plannedRoadworksButton.setBackgroundColor(blackBackground);
+            currentIncidentsButton.setBackgroundColor(blackBackground);
             loadingButtons();
             removeList();
             Log.e("MyTag","in onClick");
@@ -315,6 +338,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         }
         if (v == currentIncidentsButton)
         {
+            activeButton(true, v);
+            plannedRoadworksButton.setBackgroundColor(blackBackground);
+            roadworksButton.setBackgroundColor(blackBackground);
             loadingButtons();
             removeList();
             Log.e("MyTag","in onClick");
@@ -328,6 +354,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
                 itemListView.setAdapter(adapter);
                 roadSearch.setText("");
+                dateSearch.setText("");
                 rawFeedDataDisplay.setText("Displaying " + itemsArrayList.size() + " results");
         }
 

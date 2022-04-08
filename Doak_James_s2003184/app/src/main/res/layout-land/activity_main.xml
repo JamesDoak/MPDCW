@@ -12,7 +12,6 @@
     tools:context=".MainActivity"
     android:windowSoftInputMode="stateAlwaysHidden">
 
-
     <RelativeLayout
         android:id="@+id/rightRelative"
         android:layout_width="227dp"
@@ -24,6 +23,7 @@
             android:id="@+id/leftLinear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <Button
@@ -44,8 +44,8 @@
                 android:id="@+id/currentIncidentsButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="Current Incidents"
-
                 android:theme="@style/Button.White"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -53,8 +53,8 @@
                 android:id="@+id/editText1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:ems="10"
+                android:gravity="center"
                 android:hint="Enter a road to search"
                 android:imeOptions="actionSearch"
                 android:inputType="textPersonName"

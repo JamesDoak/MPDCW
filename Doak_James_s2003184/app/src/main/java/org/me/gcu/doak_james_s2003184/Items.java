@@ -103,18 +103,18 @@ public class Items {
 
     public Items(String titleIn, String descriptionIn, String linkIn, String georssIn, String authorIn,
                      String commentsIn, String pubdateIn){
-        title = titleIn;
-        description = descriptionIn;
+        this.title = titleIn;
+        this.description = descriptionIn;
 //        link = linkIn;
 //        georss = georssIn;
 //        author = authorIn;
 //        comments = commentsIn;
-        pubDate = pubdateIn;
+        this.pubDate = pubdateIn;
     }
 
     public Items(String titleIn, String pubdateIn){
-        title = titleIn;
-        pubDate = pubdateIn;
+        this.title = titleIn;
+        this.pubDate = pubdateIn;
     }
 
     public String toString()
