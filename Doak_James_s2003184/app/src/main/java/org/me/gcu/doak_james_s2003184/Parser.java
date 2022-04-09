@@ -43,7 +43,7 @@ public class Parser {
                     if (xpp.getName().equalsIgnoreCase("item"))
                     {
                         itemFound = 1;
-                        Log.e("MyTag","Item Start Tag found");
+//                        Log.e("MyTag","Item Start Tag found");
                         item = new Items();
                     }
                     if(itemFound == 1){
@@ -52,7 +52,7 @@ public class Parser {
                                 // Now just get the associated text
                                 String title = xpp.nextText();
                                 // Do something with text
-                                Log.e("MyTag","Title is " + title);
+//                                Log.e("MyTag","Title is " + title);
                                 item.setTitle(title);
                             }
                             else
@@ -61,7 +61,7 @@ public class Parser {
                                 // Now just get the associated text
                                 String description = xpp.nextText();
                                 // Do something with text
-                                Log.e("MyTag","description is " + description);
+//                                Log.e("MyTag","description is " + description);
                                 item.setDescription(description);
                             }
 //                            else
@@ -79,7 +79,7 @@ public class Parser {
                                 // Now just get the associated text
                                 String georss = xpp.nextText();
                                 // Do something with text
-                                Log.e("MyTag","georss is " + georss);
+//                                Log.e("MyTag","georss is " + georss);
                                 item.setGeorss(georss);
                             }
 //                            else
@@ -106,7 +106,7 @@ public class Parser {
                                 // Now just get the associated text
                                 String pubDate = xpp.nextText();
                                 // Do something with text
-                                Log.e("MyTag","pubDate is " + pubDate);
+//                                Log.e("MyTag","pubDate is " + pubDate);
                                 item.setPubDate(pubDate);
                             }
                         }
@@ -117,7 +117,7 @@ public class Parser {
                 {
                     if (xpp.getName().equalsIgnoreCase("item"))
                     {
-                        Log.e("MyTag","item is " + item.toString());
+//                        Log.e("MyTag","item is " + item.toString());
                         itemsArrayList.add(item);
                     }
                     else
@@ -125,7 +125,7 @@ public class Parser {
                     {
                         int size;
                         size = itemsArrayList.size();
-                        Log.e("MyTag","itemsCollection size is " + size);
+//                        Log.e("MyTag","itemsCollection size is " + size);
                     }
                 }
 
@@ -146,7 +146,7 @@ public class Parser {
             Log.e("MyTag","IO error during parsing");
         }
 
-        Log.e("MyTag","End document");
+//        Log.e("MyTag","End document");
 
         return itemsArrayList;
 

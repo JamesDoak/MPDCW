@@ -42,8 +42,6 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements OnClickListener
 {
     private TextView rawFeedDataDisplay;
-    private EditText roadSearch;
-    private EditText dateSearch;
     private EditText roadSearchEntry;
     private EditText dateSearchEntry;
     private Button plannedRoadworksButton;
@@ -51,14 +49,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private Button currentIncidentsButton;
     private Button clearButton;
     private String result = "";
-    private String url1="";
     private final String urlSourceA="https://trafficscotland.org/rss/feeds/plannedroadworks.aspx";
     private final String urlSourceB="https://trafficscotland.org/rss/feeds/roadworks.aspx";
     private final String urlSourceC="https://trafficscotland.org/rss/feeds/currentincidents.aspx";
     private ArrayList<Items> itemsArrayList = new ArrayList<>();
     private ArrayList itemList = new ArrayList<>();
     private ListView itemListView;
-    private TextView label;
     private ProgressBar progressBar;
     private DatePickerDialog picker;
     private CustomArrayAdaptor cAdaptor;
@@ -76,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.e("MyTag","in onCreate");
+//        Log.e("MyTag","in onCreate");
         // Set up the raw links to the graphical components
         rawFeedDataDisplay = (TextView)findViewById(R.id.rawFeedDataDisplay);
         plannedRoadworksButton = (Button)findViewById(R.id.plannedRoadworksButton);
@@ -87,18 +83,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         currentIncidentsButton.setOnClickListener(this);
         clearButton = (Button)findViewById(R.id.clearButton);
         clearButton.setOnClickListener(this);
-//        itemListView.setVisibility(View.GONE);
         welcomeImg = (ImageView)findViewById(R.id.welcomeImg);
         welcomeImg.setVisibility(View.VISIBLE);
 
-//        roadSearch = (EditText)findViewById(R.id.roadSearchEntry);
-//        roadSearch.setOnClickListener(this);
-//        dateSearch = (EditText)findViewById(R.id.dateSearchEntry);
-//        dateSearch.setOnClickListener(this);
-
-        Log.e("MyTag","after feedAButton");
+//        Log.e("MyTag","after feedAButton");
         // More Code goes here
-        label = (TextView) findViewById(R.id.label);
         itemListView = findViewById(R.id.ListView);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
@@ -117,10 +106,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
         dateSearchEntry.setEnabled(true);
 
-//        ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
-//        ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
-
-//        itemListView.setAdapter(adapter);
         cAdaptor = new CustomArrayAdaptor(MainActivity.this, itemsArrayList);
         itemListView.setAdapter(cAdaptor);
 
@@ -180,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                             (keyCode == KeyEvent.KEYCODE_ENTER))
                     {
                         String userSEntry = String.format(dateSearchEntry.getText().toString());
-                        Log.d("User Input: ", userSEntry); //works - returns user entry
+//                        Log.d("User Input: ", userSEntry); //works - returns user entry
 
                         if(userSEntry.isEmpty()){
                             rawFeedDataDisplay.setText("Please enter a search term");
@@ -196,12 +181,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                                 }
 
                             }
-                            Log.e("Matched: ", matched.toString());
+//                            Log.e("Matched: ", matched.toString());
 
                             if(matched.isEmpty())
                             {
-//                                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
-//                                itemListView.setAdapter(adapter);
                                 cAdaptor = new CustomArrayAdaptor(MainActivity.this, itemsArrayList);
                                 itemListView.setAdapter(cAdaptor);
                                 hideKeyboard(MainActivity.this);
@@ -209,8 +192,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                             }
                             else
                             {
-//                                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, matched);
-//                                itemListView.setAdapter(adapter);
                                 cAdaptor = new CustomArrayAdaptor(MainActivity.this, matched);
                                 itemListView.setAdapter(cAdaptor);
                                 hideKeyboard(MainActivity.this);
@@ -276,12 +257,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
     public void activeButton(Boolean click, View view){
         Boolean isClicked = click;
-
         int tealBackground = ContextCompat.getColor(MainActivity.this, R.color.teal_200);
-        int blackBackground = ContextCompat.getColor(MainActivity.this, R.color.black);
-//        int whiteText = ContextCompat.getColor(MainActivity.this, R.color.white);
-//        int blackText = ContextCompat.getColor(MainActivity.this, R.color.black);
-
         if(isClicked){
             view.setBackgroundColor(tealBackground);
         }
@@ -298,9 +274,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     @Override
     public void onClick(View v)
     {
-        int blackBackground = ContextCompat.getColor(MainActivity.this, R.color.black);
-        int whiteText = ContextCompat.getColor(MainActivity.this, R.color.white);
-
         if (v == plannedRoadworksButton)
         {
             welcomeImg.setVisibility(View.GONE);
@@ -315,11 +288,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             setDefaultButtonStyle(currentIncidentsButton);
             loadingButtons();
             removeList();
-            Log.e("MyTag","in onClick");
+//            Log.e("MyTag","in onClick");
             rawFeedDataDisplay.setText("Loading all Planned Roadworks");
             startProgressMain(1);
             itemList.clear();
-            Log.e("MyTag","after startProgress");
+//            Log.e("MyTag","after startProgress");
         }
         if (v == roadworksButton)
         {
@@ -335,11 +308,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             setDefaultButtonStyle(currentIncidentsButton);
             loadingButtons();
             removeList();
-            Log.e("MyTag","in onClick");
+//            Log.e("MyTag","in onClick");
             rawFeedDataDisplay.setText("Loading all Current Roadworks");
             startProgressMain(2);
             itemList.clear();
-            Log.e("MyTag","after startProgress");
+//            Log.e("MyTag","after startProgress");
         }
         if (v == currentIncidentsButton)
         {
@@ -355,23 +328,23 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             setDefaultButtonStyle(roadworksButton);
             loadingButtons();
             removeList();
-            Log.e("MyTag","in onClick");
+//            Log.e("MyTag","in onClick");
             rawFeedDataDisplay.setText("Loading all Current Incidents");
             startProgressMain(3);
             itemList.clear();
-            Log.e("MyTag","after startProgress");
+//            Log.e("MyTag","after startProgress");
         }
 
         if (v == clearButton){
-//                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
-//                itemListView.setAdapter(adapter);
                 cAdaptor = new CustomArrayAdaptor(MainActivity.this, itemsArrayList);
                 itemListView.setAdapter(cAdaptor);
-
-
-            roadSearchEntry.setText("");
-            dateSearchEntry.setText("");
+                roadSearchEntry.setText("");
+                dateSearchEntry.setText("");
                 rawFeedDataDisplay.setText("Displaying " + itemsArrayList.size() + " results");
+        }
+
+        if(v == dateSearchEntry){
+
         }
 
         //return the search results from the text entry
@@ -384,7 +357,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                             (keyCode == KeyEvent.KEYCODE_ENTER))
                     {
                         String userSEntry = roadSearchEntry.getText().toString();
-                        Log.d("User Input: ", userSEntry); //works - returns user entry
+//                        Log.d("User Input: ", userSEntry); //works - returns user entry
 
                         if(userSEntry.isEmpty()){
                             rawFeedDataDisplay.setText("Please enter a search term");
@@ -398,26 +371,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                                     matched.add(item);
                                 }
                             }
-                            Log.e("Matched: ", matched.toString());
+//                            Log.e("Matched: ", matched.toString());
 
                             if(matched.isEmpty())
                             {
-//                                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
-//                                itemListView.setAdapter(adapter);
                                 cAdaptor = new CustomArrayAdaptor(MainActivity.this, itemsArrayList);
                                 itemListView.setAdapter(cAdaptor);
-
                                 hideKeyboard(MainActivity.this);
                                 rawFeedDataDisplay.setText("Road not found");
                             }
                             else
                             {
-//                                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, matched);
-//                                itemListView.setAdapter(adapter);
                                 cAdaptor = new CustomArrayAdaptor(MainActivity.this, matched);
                                 itemListView.setAdapter(cAdaptor);
-
-
                                 hideKeyboard(MainActivity.this);
                                 rawFeedDataDisplay.setText("Displaying search results: " + roadSearchEntry.getText().toString());
                             }
@@ -464,11 +430,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             BufferedReader in = null;
             String inputLine = "";
             result = "";
-            Log.e("MyTag","in run");
+//            Log.e("MyTag","in run");
 
             try
             {
-                Log.e("MyTag","in try");
+//                Log.e("MyTag","in try");
                 aurl = new URL(url);
                 yc = aurl.openConnection();
                 in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
@@ -476,7 +442,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 while ((inputLine = in.readLine()) != null)
                 {
                     result = result + inputLine;
-                    Log.e("MyTag",inputLine);
+//                    Log.e("MyTag",inputLine);
 
                 }
                 in.close();
@@ -492,22 +458,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             MainActivity.this.runOnUiThread(new Runnable()
             {
                 public void run() {
-                    Log.d("UI thread", "I am the UI thread");
-
+//                    Log.d("UI thread", "I am the UI thread");
 
                     //set the parser for future use
                     Parser p = new Parser();
-
                     String xmlCopy = result;
-                    Log.d("(XML COPY): ", xmlCopy);
+//                    Log.d("(XML COPY): ", xmlCopy);
 
                     //update the items array with the parsed data
                     itemsArrayList = p.parseData(xmlCopy);
 
                     //set and display the list view
-//                    ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
-//                    itemListView.setAdapter(adapter);
-
                     cAdaptor = new CustomArrayAdaptor(MainActivity.this, itemsArrayList);
                     itemListView.setAdapter(cAdaptor);
 
@@ -516,8 +477,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                     progressBar.setVisibility(View.INVISIBLE);
                     dataButtonsParsed();
 
-                    Log.d("Array Data", itemsArrayList.toString());
-                    Log.e("XML Stream",result.toString());
+//                    Log.d("Array Data", itemsArrayList.toString());
+//                    Log.e("XML Stream",result.toString());
 
                 }
             });
