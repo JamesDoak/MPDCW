@@ -16,10 +16,13 @@ public class Items {
     private String title;
     private String description;
 //    private String link;
-//    private String georss;
+    private String georss;
 //    private String author;
 //    private String comments;
     private String pubDate;
+    private String startDate;
+    private String endDate;
+    private String delayInfo;
     private ArrayList<Items> item = new ArrayList<Items>();
 
 //    public void setArray(ArrayList<Items> arr){
@@ -37,11 +40,14 @@ public class Items {
         title = titleIn;
     }
 
+//    public String getDescription(){
+//        return desFormat(description);
+//    }
     public String getDescription(){
-        return removeBRTags(description);
+        return description;
     }
     public void setDescription(String descriptionIn){
-        description = descriptionIn;
+        description = removeBRTags(descriptionIn);
     }
 
 //    public String getLink(){
@@ -51,12 +57,12 @@ public class Items {
 //        link = linkIn;
 //    }
 //
-//    public String getGeorss(){
-//        return georss;
-//    }
-//    public void setGeorss(String georssIn){
-//        georss = georssIn;
-//    }
+    public String getGeorss(){
+        return georss;
+    }
+    public void setGeorss(String georssIn){
+        georss = georssIn;
+    }
 //
 //    public String getAuthor(){
 //        return author;
@@ -85,7 +91,7 @@ public class Items {
                 + "\n• Description: "
                 + removeBRTags(description)
 //                + "\n• Link: " + link
-//                + "\n• geoRSS: " + georss
+                + "\n• geoRSS: " + georss
                 + "\n• Published: " + pubDate;
         return output;
     }
@@ -95,7 +101,7 @@ public class Items {
         title = "";
         description = "";
 //        link = "";
-//        georss = "";
+        georss = "";
 //        author = "";
 //        comments = "";
         pubDate = "";
@@ -106,7 +112,7 @@ public class Items {
         this.title = titleIn;
         this.description = descriptionIn;
 //        link = linkIn;
-//        georss = georssIn;
+        georss = georssIn;
 //        author = authorIn;
 //        comments = commentsIn;
         this.pubDate = pubdateIn;
@@ -124,22 +130,60 @@ public class Items {
                 + "\n• Description: "
                 + removeBRTags(description)
 //                + "\n• Link: " + link
-//                + "\n• geoRSS: " + georss
+                + "\n• geoRSS: " + georss
 //                + " " + author
 //                + " " + comments
                 + "\n• Published: " + pubDate;
         return result;
     }
 
+
+    public String getStartDate(){
+        return startDate;
+    }
+    public void setStartDate(String startDateIn){
+        startDate = startDateIn;
+    }
+
+    public String getEndtDate(){
+        return endDate;
+    }
+    public void setEndDate(String endDateIn){
+        endDate = endDateIn;
+    }
+
+    public String getDelayInfo(){
+        return delayInfo;
+    }
+    public void setDelayInfo(String delayInfoIn){
+        delayInfo = delayInfoIn;
+    }
+
+    public String desFormat(String des){
+        String desc = des;
+        String descSDsFin;
+        int tempSDs = desc.indexOf("Start Date: ");
+        int tempSDe = desc.indexOf(" - 00:00");
+
+        descSDsFin = desc.substring(tempSDs, tempSDe);
+        setStartDate(descSDsFin);
+
+        return descSDsFin;
+    }
+
+
     public String removeBRTags(String des)
     {
         String[] stringArray = des.split("<br />");
         String result = "";
         for (int i = 0; i < stringArray.length; i++){
-            result = result + "" + stringArray[i] + " ";
+            result = result + "\n" + stringArray[i] + " ";
         }
         return result;
     }
+
+
+
 
 
 }

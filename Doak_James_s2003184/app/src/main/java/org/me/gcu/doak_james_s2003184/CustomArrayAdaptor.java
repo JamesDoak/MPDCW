@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,10 +42,30 @@ public class CustomArrayAdaptor extends ArrayAdapter<Items> {
         title.setText(currentItem.getTitle());
 
         TextView description = (TextView) listItem.findViewById(R.id.item_description);
-        description.setText(currentItem.getDescription());
+        description.setText(currentItem.getDescription() + "\n\nGPS:" + currentItem.getGeorss());
+        description.setVisibility(View.GONE);
+
+        TextView gps = (TextView) listItem.findViewById(R.id.item_gps);
+        gps.setText("GPS: " + currentItem.getGeorss());
+        gps.setVisibility(View.GONE);
 
         TextView published = (TextView) listItem.findViewById(R.id.item_published);
         published.setText("Published: " + currentItem.getPubDate());
+
+        Button expand = (Button) listItem.findViewById(R.id.expand_button);
+        expand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(description.getVisibility() == View.GONE){
+                    description.setVisibility(View.VISIBLE);
+                }
+                else if(description.getVisibility() == View.VISIBLE){
+                    description.setVisibility(View.GONE);
+                }
+            }
+        });
+
+
 
         return listItem;
     }

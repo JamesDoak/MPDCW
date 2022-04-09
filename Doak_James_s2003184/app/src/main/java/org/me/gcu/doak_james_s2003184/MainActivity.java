@@ -102,12 +102,20 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         dateSearchEntry = findViewById(R.id.dateSearchEntry);
         dateSearchEntry.setOnClickListener(this);
 
+        roadSearchEntry.setVisibility(View.GONE);
+        dateSearchEntry.setVisibility(View.GONE);
+        clearButton.setVisibility(View.GONE);
+        rawFeedDataDisplay.setVisibility(View.GONE);
+
+
         dateSearch.setEnabled(true);
 
-        ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
-        ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
+//        ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
+//        ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
 
-        itemListView.setAdapter(adapter);
+//        itemListView.setAdapter(adapter);
+        cAdaptor = new CustomArrayAdaptor(MainActivity.this, itemsArrayList);
+        itemListView.setAdapter(cAdaptor);
 
         dateSearch.setOnClickListener(new AdapterView.OnClickListener() {
             @Override
@@ -185,15 +193,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
                             if(matched.isEmpty())
                             {
-                                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
-                                itemListView.setAdapter(adapter);
+//                                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
+//                                itemListView.setAdapter(adapter);
+                                cAdaptor = new CustomArrayAdaptor(MainActivity.this, itemsArrayList);
+                                itemListView.setAdapter(cAdaptor);
                                 hideKeyboard(MainActivity.this);
                                 rawFeedDataDisplay.setText("Date not found");
                             }
                             else
                             {
-                                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, matched);
-                                itemListView.setAdapter(adapter);
+//                                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, matched);
+//                                itemListView.setAdapter(adapter);
+                                cAdaptor = new CustomArrayAdaptor(MainActivity.this, matched);
+                                itemListView.setAdapter(cAdaptor);
                                 hideKeyboard(MainActivity.this);
                                 rawFeedDataDisplay.setText("Displaying search results: " + dateSearch.getText().toString());
 
@@ -205,36 +217,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 return false;
             }
         });
-
-//        itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//
-////                rawFeedDataDisplay.setText("Clicked item number: " + position);
-//                Object item;
-//                item = itemListView.getItemAtPosition(position);
-//
-//                //get current position
-//                Integer pos = position;
-//                Log.e("Position: ", pos.toString());
-////                Log.e("ArrayList", itemsArrayList.toString());
-//
-//                if (!itemList.isEmpty()) {
-//                    itemList.clear();
-//                    ArrayAdapter adapter1 = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
-//
-//                    Log.d("Object", item.toString());
-//                    itemListView.setAdapter(adapter1);
-//                }else{
-//                itemList.add(item);
-//                ArrayAdapter adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, itemList);
-//
-//                Log.d("Object", item.toString());
-//                itemListView.setAdapter(adapter2);
-//                }
-//            }
-//        });
     }
 
 
@@ -312,8 +294,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
         if (v == plannedRoadworksButton)
         {
-
+            roadSearchEntry.setVisibility(View.VISIBLE);
+            dateSearchEntry.setVisibility(View.VISIBLE);
+            clearButton.setVisibility(View.VISIBLE);
+            rawFeedDataDisplay.setVisibility(View.VISIBLE);
             activeButton(true, v);
+            roadSearch.setText("");
+            dateSearch.setText("");
             setDefaultButtonStyle(roadworksButton);
             setDefaultButtonStyle(currentIncidentsButton);
             loadingButtons();
@@ -327,7 +314,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         }
         if (v == roadworksButton)
         {
+            roadSearchEntry.setVisibility(View.VISIBLE);
+            dateSearchEntry.setVisibility(View.VISIBLE);
+            clearButton.setVisibility(View.VISIBLE);
+            rawFeedDataDisplay.setVisibility(View.VISIBLE);
             activeButton(true, v);
+            roadSearch.setText("");
+            dateSearch.setText("");
             setDefaultButtonStyle(plannedRoadworksButton);
             setDefaultButtonStyle(currentIncidentsButton);
             loadingButtons();
@@ -341,7 +334,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         }
         if (v == currentIncidentsButton)
         {
+            roadSearchEntry.setVisibility(View.VISIBLE);
+            dateSearchEntry.setVisibility(View.GONE);
+            clearButton.setVisibility(View.VISIBLE);
+            rawFeedDataDisplay.setVisibility(View.VISIBLE);
             activeButton(true, v);
+            roadSearch.setText("");
+            dateSearch.setText("");
             setDefaultButtonStyle(plannedRoadworksButton);
             setDefaultButtonStyle(roadworksButton);
             dateSearch.setEnabled(false);
@@ -355,8 +354,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         }
 
         if (v == clearButton){
-                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
-                itemListView.setAdapter(adapter);
+//                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
+//                itemListView.setAdapter(adapter);
+                cAdaptor = new CustomArrayAdaptor(MainActivity.this, itemsArrayList);
+                itemListView.setAdapter(cAdaptor);
+
+
                 roadSearch.setText("");
                 dateSearch.setText("");
                 rawFeedDataDisplay.setText("Displaying " + itemsArrayList.size() + " results");
@@ -382,7 +385,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                             ArrayList<Items> matched = new ArrayList<Items>();
                             for (Items item : itemsArrayList)
                             {
-                                if (item.getTitle().toLowerCase(Locale.ROOT).contains(userSEntry)) {
+                                if (item.getTitle().contains(userSEntry.toUpperCase(Locale.ROOT))) {
                                     matched.add(item);
                                 }
                             }
@@ -390,15 +393,22 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
                             if(matched.isEmpty())
                             {
-                                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
-                                itemListView.setAdapter(adapter);
+//                                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, itemsArrayList);
+//                                itemListView.setAdapter(adapter);
+                                cAdaptor = new CustomArrayAdaptor(MainActivity.this, itemsArrayList);
+                                itemListView.setAdapter(cAdaptor);
+
                                 hideKeyboard(MainActivity.this);
                                 rawFeedDataDisplay.setText("Road not found");
                             }
                             else
                             {
-                                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, matched);
-                                itemListView.setAdapter(adapter);
+//                                ArrayAdapter<Items> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, matched);
+//                                itemListView.setAdapter(adapter);
+                                cAdaptor = new CustomArrayAdaptor(MainActivity.this, matched);
+                                itemListView.setAdapter(cAdaptor);
+
+
                                 hideKeyboard(MainActivity.this);
                                 rawFeedDataDisplay.setText("Displaying search results: " + roadSearch.getText().toString());
                             }

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
 
     <TextView
         android:id="@+id/item_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@color/black"
+        android:background="@color/teal_200"
+        android:gravity="center"
+        android:text="Title"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:text="Title"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/item_description"
@@ -25,14 +25,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/item_title"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:textSize="13sp"
-        android:text="Description"/>
+        android:gravity="center"
+        android:text="Description"
+        android:textSize="13sp" />
 
     <TextView
-        android:id="@+id/item_published"
+        android:id="@+id/item_gps"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/item_description"
@@ -40,10 +41,39 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
+        android:gravity="center"
         android:textSize="13sp"
-        android:gravity="fill"
+        android:text="gps"/>
+
+    <TextView
+        android:id="@+id/item_published"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_gps"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="13sp"
+        android:gravity="center"
         android:background="@color/teal_200"
         android:textColor="@color/white"
         android:text="Published"/>
+
+    <Button
+        android:id="@+id/expand_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_published"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="13sp"
+        android:gravity="center"
+        android:background="@color/teal_200"
+        android:textColor="@color/white"
+        android:text="Show Details"/>
+
 
 </RelativeLayout>

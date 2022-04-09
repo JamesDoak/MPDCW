@@ -74,14 +74,14 @@ public class Parser {
 //                                item.setLink(link);
 //                            }
 //                            else
-//                            if (xpp.getName().equalsIgnoreCase("point"))
-//                            {
-//                                // Now just get the associated text
-//                                String georss = xpp.nextText();
-//                                // Do something with text
-//                                Log.e("MyTag","georss is " + georss);
-//                                item.setGeorss(georss);
-//                            }
+                            if (xpp.getName().equalsIgnoreCase("point"))
+                            {
+                                // Now just get the associated text
+                                String georss = xpp.nextText();
+                                // Do something with text
+                                Log.e("MyTag","georss is " + georss);
+                                item.setGeorss(georss);
+                            }
 //                            else
 //                            if (xpp.getName().equalsIgnoreCase("author"))
 //                            {
