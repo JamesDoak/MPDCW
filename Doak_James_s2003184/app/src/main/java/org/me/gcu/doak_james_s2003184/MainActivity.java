@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ListView;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private ProgressBar progressBar;
     private DatePickerDialog picker;
     private CustomArrayAdaptor cAdaptor;
+    private ImageView welcomeImg;
 
 
     public MainActivity() {
@@ -85,6 +87,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         currentIncidentsButton.setOnClickListener(this);
         clearButton = (Button)findViewById(R.id.clearButton);
         clearButton.setOnClickListener(this);
+//        itemListView.setVisibility(View.GONE);
+        welcomeImg = (ImageView)findViewById(R.id.welcomeImg);
+        welcomeImg.setVisibility(View.VISIBLE);
 
 //        roadSearch = (EditText)findViewById(R.id.roadSearchEntry);
 //        roadSearch.setOnClickListener(this);
@@ -255,6 +260,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         currentIncidentsButton.setEnabled(false);
         clearButton.setEnabled(false);
         roadSearchEntry.setEnabled(false);
+        dateSearchEntry.setEnabled(false);
     }
 
     public void dataButtonsParsed()
@@ -264,6 +270,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         currentIncidentsButton.setEnabled(true);
         clearButton.setEnabled(true);
         roadSearchEntry.setEnabled(true);
+        dateSearchEntry.setEnabled(true);
     }
 
 
@@ -296,6 +303,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
         if (v == plannedRoadworksButton)
         {
+            welcomeImg.setVisibility(View.GONE);
             roadSearchEntry.setVisibility(View.VISIBLE);
             dateSearchEntry.setVisibility(View.VISIBLE);
             clearButton.setVisibility(View.VISIBLE);
@@ -306,7 +314,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             setDefaultButtonStyle(roadworksButton);
             setDefaultButtonStyle(currentIncidentsButton);
             loadingButtons();
-            dateSearchEntry.setEnabled(true);
             removeList();
             Log.e("MyTag","in onClick");
             rawFeedDataDisplay.setText("Loading all Planned Roadworks");
@@ -316,6 +323,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         }
         if (v == roadworksButton)
         {
+            welcomeImg.setVisibility(View.GONE);
             roadSearchEntry.setVisibility(View.VISIBLE);
             dateSearchEntry.setVisibility(View.VISIBLE);
             clearButton.setVisibility(View.VISIBLE);
@@ -326,7 +334,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             setDefaultButtonStyle(plannedRoadworksButton);
             setDefaultButtonStyle(currentIncidentsButton);
             loadingButtons();
-            dateSearchEntry.setEnabled(true);
             removeList();
             Log.e("MyTag","in onClick");
             rawFeedDataDisplay.setText("Loading all Current Roadworks");
@@ -336,6 +343,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         }
         if (v == currentIncidentsButton)
         {
+            welcomeImg.setVisibility(View.GONE);
             roadSearchEntry.setVisibility(View.VISIBLE);
             dateSearchEntry.setVisibility(View.GONE);
             clearButton.setVisibility(View.VISIBLE);
@@ -345,7 +353,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             dateSearchEntry.setText("");
             setDefaultButtonStyle(plannedRoadworksButton);
             setDefaultButtonStyle(roadworksButton);
-            dateSearch.setEnabled(false);
             loadingButtons();
             removeList();
             Log.e("MyTag","in onClick");

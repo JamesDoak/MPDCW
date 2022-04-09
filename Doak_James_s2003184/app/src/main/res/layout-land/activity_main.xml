@@ -108,6 +108,13 @@
         android:layout_marginLeft="0dp"
         android:layout_toRightOf="@+id/rightRelative">
 
+        <ImageView
+            android:id="@+id/welcomeImg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="Welcome Image"
+            android:src="@drawable/welcome_message"></ImageView>
+
 
         <ListView
             android:id="@+id/ListView"
