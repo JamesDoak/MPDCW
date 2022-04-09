@@ -1,3 +1,5 @@
+//James Alexander Doak
+//S2003184
 package org.me.gcu.doak_james_s2003184;
 
 import android.widget.ArrayAdapter;
@@ -58,9 +60,11 @@ public class CustomArrayAdaptor extends ArrayAdapter<Items> {
             public void onClick(View view) {
                 if(description.getVisibility() == View.GONE){
                     description.setVisibility(View.VISIBLE);
+                    expand.setText("HIDE DETAILS");
                 }
                 else if(description.getVisibility() == View.VISIBLE){
                     description.setVisibility(View.GONE);
+                    expand.setText("SHOW DETAILS");
                 }
             }
         });
